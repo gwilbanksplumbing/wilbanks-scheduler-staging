@@ -10,7 +10,18 @@
   "use strict";
 
   // ── Gate ────────────────────────────────────────────────────────────────────
+  // Two ways to enable:
+  //   1) localStorage.wc_voice = "1"
+  //   2) URL contains ?voice=1 anywhere (in search OR after hash) -> sets flag and continues
+  //      Disable with ?voice=0
   try {
+    var search = (window.location.search || "") + "&" + ((window.location.hash || "").split("?")[1] || "");
+    if (/[?&]voice=1\b/.test(search)) {
+      try { localStorage.setItem("wc_voice", "1"); } catch (e) {}
+    } else if (/[?&]voice=0\b/.test(search)) {
+      try { localStorage.removeItem("wc_voice"); } catch (e) {}
+      return;
+    }
     if (localStorage.getItem("wc_voice") !== "1") return;
   } catch (e) { return; }
 
