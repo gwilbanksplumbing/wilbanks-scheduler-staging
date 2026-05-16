@@ -197,6 +197,29 @@
       .catch(function (err) { showStatus("Parse failed: " + err.message, "err"); });
   }
 
+  // Try to set a Radix combobox by clicking trigger + matching option. Returns Promise<boolean>.
+  function setRadixCombobox(triggerEl, label) {
+    return new Promise(function (resolve) {
+      if (!triggerEl || !label) { resolve(false); return; }
+      try { triggerEl.click(); } catch (e) { resolve(false); return; }
+      // Radix renders options in a portal after a tick
+      setTimeout(function () {
+        var opts = document.querySelectorAll('[role="option"]');
+        var match = null;
+        for (var i = 0; i < opts.length; i++) {
+          var txt = (opts[i].textContent || "").trim().toLowerCase();
+          if (txt === String(label).toLowerCase() || txt.indexOf(String(label).toLowerCase()) === 0) { match = opts[i]; break; }
+        }
+        if (match) { match.click(); resolve(true); }
+        else {
+          // Close the popover by clicking elsewhere
+          try { document.body.click(); } catch (e) {}
+          resolve(false);
+        }
+      }, 120);
+    });
+  }
+
   function applyFields(data, transcript) {
     if (!data) { showStatus("Empty response", "err"); return; }
 
@@ -209,10 +232,22 @@
     var f = data.fields || {};
     var matched = data.matchedCustomer || null;
 
-    // Compose customerName from firstName + lastName, prefer matched record
+    // Compose customerName from firstName + lastName, prefer matched record.
+    // Fallback: if Groq only filled lastName, try to recover a first name from the transcript.
     var customerName = "";
-    if (matched && matched.name) customerName = matched.name;
-    else if (f.firstName || f.lastName) customerName = [f.firstName, f.lastName].filter(Boolean).join(" ").trim();
+    if (matched && matched.name) {
+      customerName = matched.name;
+    } else {
+      var fn = (f.firstName || "").trim();
+      var ln = (f.lastName || "").trim();
+      if (!fn && ln && transcript) {
+        // Look for "<Word> <ln>" in the transcript (capitalized first word before lastName)
+        var re = new RegExp("([A-Z][a-z]+)\\s+" + ln.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&"), "");
+        var m = transcript.match(re);
+        if (m) fn = m[1];
+      }
+      customerName = [fn, ln].filter(Boolean).join(" ").trim();
+    }
 
     var phone = (matched && matched.phone) || f.customerPhone || "";
     var address = (matched && matched.address) || f.jobAddress || "";
@@ -224,15 +259,27 @@
     if (setByTid("input-job-address", address)) applied++;
     if (setByTid("input-scheduled-date", f.scheduledDate)) applied++;
     if (setByTid("input-scheduled-time", f.scheduledTime)) applied++;
-    if (setByTid("select-service-type", f.serviceType)) applied++;
     if (setByTid("select-tech-name", f.technicianName)) applied++;
     if (setByTid("textarea-notes", f.notes)) applied++;
 
-    var missing = (data.missing || []).filter(function (m) { return m !== "customerEmail" && m !== "technicianName" && m !== "notes"; });
-    var msg = "Filled " + applied + " field" + (applied === 1 ? "" : "s");
-    if (matched) msg += " (matched " + matched.name + ")";
-    if (missing.length) msg += " — review: " + missing.join(", ");
-    showStatus(msg, "ok");
+    // Service type is a Radix combobox — use click-and-select
+    var serviceTrigger = byTid("select-service-type");
+    if (serviceTrigger && f.serviceType) {
+      setRadixCombobox(serviceTrigger, f.serviceType).then(function (ok) {
+        if (ok) applied++;
+        finalize();
+      });
+    } else {
+      finalize();
+    }
+
+    function finalize() {
+      var missing = (data.missing || []).filter(function (m) { return m !== "customerEmail" && m !== "technicianName" && m !== "notes"; });
+      var msg = "Filled " + applied + " field" + (applied === 1 ? "" : "s");
+      if (matched) msg += " (matched " + matched.name + ")";
+      if (missing.length) msg += " — review: " + missing.join(", ");
+      showStatus(msg, "ok");
+    }
   }
 
   // ── Boot ────────────────────────────────────────────────────────────────────
