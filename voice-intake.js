@@ -1,7 +1,8 @@
 /* Wilbanks Voice Intake — phase 1 (staging)
- * Gated by localStorage.wc_voice === "1". Adds a mic button to the New Appointment page,
- * transcribes via Web Speech API, sends transcript to /api/voice/parse-appointment,
- * and pre-fills the form. Never auto-submits. Form testids the script writes to:
+ * Gated by localStorage.wc_voice === "1". Adds a mic button to the New Appointment page.
+ * RECORDS audio via MediaRecorder, sends to /api/voice/transcribe (Groq Whisper),
+ * then sends transcript to /api/voice/parse-appointment, and pre-fills the form.
+ * Never auto-submits. Form testids the script writes to:
  *   input-customer-name, input-customer-phone, input-customer-email, input-job-address,
  *   input-scheduled-date, input-scheduled-time, select-service-type, select-tech-name,
  *   textarea-notes
@@ -27,8 +28,10 @@
 
   // ── Config ──────────────────────────────────────────────────────────────────
   var API_BASE = "https://wilbanks-server-staging.up.railway.app";
-  var ENDPOINT = API_BASE + "/api/voice/parse-appointment";
+  var TRANSCRIBE_ENDPOINT = API_BASE + "/api/voice/transcribe";
+  var PARSE_ENDPOINT = API_BASE + "/api/voice/parse-appointment";
   var TOKEN_KEYS = ["wc_auth_token", "authToken", "wc_token"];
+  var MAX_RECORD_MS = 30000; // hard cap so we never run forever
 
   function getToken() {
     for (var i = 0; i < TOKEN_KEYS.length; i++) {
@@ -130,61 +133,134 @@
   }
 
   // ── Speech recognition ──────────────────────────────────────────────────────
-  var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var recognizing = false;
-  var rec = null;
+  // Records via MediaRecorder, uploads to /api/voice/transcribe (Groq Whisper).
+  var mediaRecorder = null;
+  var mediaStream = null;
+  var recChunks = [];
+  var recordingActive = false;
+  var recordTimeoutId = null;
 
-  function startRec() {
-    if (!SpeechRec) {
-      showStatus("Voice not supported on this browser. Use Safari on iOS.", "err");
-      return;
+  function pickMime() {
+    if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return "";
+    var candidates = [
+      "audio/webm;codecs=opus",
+      "audio/webm",
+      "audio/ogg;codecs=opus",
+      "audio/mp4"
+    ];
+    for (var i = 0; i < candidates.length; i++) {
+      try { if (MediaRecorder.isTypeSupported(candidates[i])) return candidates[i]; } catch (e) {}
     }
-    if (recognizing) { stopRec(); return; }
-    rec = new SpeechRec();
-    rec.lang = "en-US";
-    rec.interimResults = true;
-    rec.continuous = false;
-    rec.maxAlternatives = 1;
-
-    var finalText = "";
-    rec.onresult = function (ev) {
-      var interim = "";
-      for (var i = ev.resultIndex; i < ev.results.length; i++) {
-        var r = ev.results[i];
-        if (r.isFinal) finalText += r[0].transcript; else interim += r[0].transcript;
-      }
-      showStatus("Listening: " + (finalText || interim || "...").slice(0, 80));
-    };
-    rec.onerror = function (ev) {
-      recognizing = false;
-      var fab = document.getElementById("wc-voice-fab");
-      if (fab) fab.classList.remove("rec");
-      showStatus("Mic error: " + (ev.error || "unknown"), "err");
-    };
-    rec.onend = function () {
-      recognizing = false;
-      var fab = document.getElementById("wc-voice-fab");
-      if (fab) fab.classList.remove("rec");
-      var transcript = (finalText || "").trim();
-      if (!transcript) { showStatus("No speech detected.", "err"); return; }
-      sendTranscript(transcript);
-    };
-
-    try {
-      rec.start();
-      recognizing = true;
-      var fab = document.getElementById("wc-voice-fab");
-      if (fab) fab.classList.add("rec");
-      showStatus("Listening… tap mic again to stop.");
-    } catch (e) {
-      showStatus("Could not start mic: " + e.message, "err");
-    }
+    return "";
   }
 
-  function stopRec() { if (rec && recognizing) { try { rec.stop(); } catch (e) {} } }
+  function cleanupStream() {
+    if (mediaStream) {
+      try { mediaStream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
+      mediaStream = null;
+    }
+    if (recordTimeoutId) { clearTimeout(recordTimeoutId); recordTimeoutId = null; }
+  }
+
+  function setFabRecording(on) {
+    var fab = document.getElementById("wc-voice-fab");
+    if (!fab) return;
+    if (on) fab.classList.add("rec"); else fab.classList.remove("rec");
+  }
+
+  function startRec() {
+    if (recordingActive) { stopRec(); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
+      showStatus("Audio recording not supported on this browser.", "err");
+      return;
+    }
+    showStatus("Requesting mic…");
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(function (stream) {
+        mediaStream = stream;
+        var mime = pickMime();
+        try {
+          mediaRecorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+        } catch (e) {
+          showStatus("Recorder init failed: " + e.message, "err");
+          cleanupStream();
+          return;
+        }
+        recChunks = [];
+        mediaRecorder.ondataavailable = function (ev) {
+          if (ev.data && ev.data.size > 0) recChunks.push(ev.data);
+        };
+        mediaRecorder.onerror = function (ev) {
+          recordingActive = false;
+          setFabRecording(false);
+          cleanupStream();
+          showStatus("Mic error: " + (ev.error && ev.error.message || "unknown"), "err");
+        };
+        mediaRecorder.onstop = function () {
+          recordingActive = false;
+          setFabRecording(false);
+          var type = (mediaRecorder && mediaRecorder.mimeType) || "audio/webm";
+          cleanupStream();
+          if (!recChunks.length) { showStatus("No audio captured.", "err"); return; }
+          var blob = new Blob(recChunks, { type: type });
+          recChunks = [];
+          if (blob.size < 1000) { showStatus("Recording too short — try again.", "err"); return; }
+          uploadAudio(blob, type);
+        };
+        mediaRecorder.start();
+        recordingActive = true;
+        setFabRecording(true);
+        showStatus("Recording… tap mic again to stop.");
+        recordTimeoutId = setTimeout(function () {
+          if (recordingActive) {
+            showStatus("30s reached — stopping.");
+            stopRec();
+          }
+        }, MAX_RECORD_MS);
+      })
+      .catch(function (err) {
+        var name = err && err.name;
+        var msg = "Mic access denied";
+        if (name === "NotAllowedError" || name === "SecurityError") msg = "Mic permission blocked — allow it in browser settings.";
+        else if (name === "NotFoundError") msg = "No microphone found.";
+        else if (err && err.message) msg = "Mic error: " + err.message;
+        showStatus(msg, "err");
+        cleanupStream();
+      });
+  }
+
+  function stopRec() {
+    if (!recordingActive || !mediaRecorder) return;
+    try { mediaRecorder.stop(); } catch (e) {}
+  }
 
   function onMicTap() {
-    if (recognizing) stopRec(); else startRec();
+    if (recordingActive) stopRec(); else startRec();
+  }
+
+  function uploadAudio(blob, mimeType) {
+    showStatus("Transcribing…");
+    var ext = (mimeType.indexOf("mp4") >= 0) ? "m4a"
+            : (mimeType.indexOf("ogg") >= 0) ? "ogg"
+            : "webm";
+    var fd = new FormData();
+    fd.append("audio", blob, "voice-" + Date.now() + "." + ext);
+
+    fetch(TRANSCRIBE_ENDPOINT, {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + getToken() },
+      body: fd,
+    })
+      .then(function (r) {
+        if (!r.ok) return r.text().then(function (t) { throw new Error("HTTP " + r.status + ": " + t.slice(0, 120)); });
+        return r.json();
+      })
+      .then(function (data) {
+        var transcript = (data && data.transcript || "").trim();
+        if (!transcript) { showStatus("No speech detected.", "err"); return; }
+        sendTranscript(transcript);
+      })
+      .catch(function (err) { showStatus("Transcribe failed: " + err.message, "err"); });
   }
 
   // ── Send transcript to server, then prefill ─────────────────────────────────
@@ -192,7 +268,7 @@
     showStatus("Parsing: " + transcript.slice(0, 60) + "…");
     var today = new Date().toISOString().slice(0, 10);
 
-    fetch(ENDPOINT, {
+    fetch(PARSE_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
