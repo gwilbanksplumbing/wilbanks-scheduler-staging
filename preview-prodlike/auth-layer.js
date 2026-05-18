@@ -1521,8 +1521,15 @@
 
     // Strategy 1b: Dashboard mobile menu — inject Admin Tools + Sign Out
     function tryInjectMobileMenu() {
-      // The mobile dropdown has class 'md:hidden fixed top-[57px]'
-      const mobileMenu = document.querySelector('.fixed.top-\\[57px\\]');
+      // Find the mobile nav dropdown. Prefer the explicit data-testid added
+      // by Sidebar.tsx; fall back to the legacy class-only selector for
+      // older bundles. The legacy '.fixed.top-[57px]' selector is now
+      // dangerous because the AI FullPageResults overlay (AskAiBar.tsx)
+      // ALSO uses 'top-[57px]' on mobile to expose this dropdown's header.
+      // If we matched the overlay by accident, we'd inject Admin Tools +
+      // Sign Out INTO the AI results panel.
+      const mobileMenu = document.querySelector('[data-testid="mobile-nav-dropdown"]')
+        || document.querySelector('.md\\:hidden.fixed.top-\\[57px\\]');
       if (!mobileMenu) return;
 
       // Inject collapsible Admin Tools section for admin/both roles
@@ -1648,7 +1655,10 @@
     // Poll for mobile menu visibility and inject QB link + admin items when open
     var _lastMenuChildCount = 0;
     setInterval(function() {
-      var menu = document.querySelector('.fixed.top-\\[57px\\]');
+      // Same selector hardening as tryInjectMobileMenu — must not match the
+      // AskAiBar FullPageResults overlay (which also uses top-[57px] on mobile).
+      var menu = document.querySelector('[data-testid="mobile-nav-dropdown"]')
+        || document.querySelector('.md\\:hidden.fixed.top-\\[57px\\]');
       if (!menu) return;
       var visible = menu.offsetHeight > 0 && getComputedStyle(menu).display !== 'none';
       if (!visible) return;
@@ -1808,7 +1818,8 @@
     const svgIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>';
 
     // Mobile menu link — always inject regardless of sidebar presence
-    const mobileMenu = document.querySelector('.fixed.top-\\[57px\\]');
+    const mobileMenu = document.querySelector('[data-testid="mobile-nav-dropdown"]')
+      || document.querySelector('.md\\:hidden.fixed.top-\\[57px\\]');
     if (mobileMenu) {
       let mobileLink = document.getElementById('wc-qb-login-mobile');
       if (!mobileLink) {
