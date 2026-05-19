@@ -1817,13 +1817,32 @@
       localStorage.setItem(HASH_AT_KEY, String(Date.now()));
     } catch {}
   }
+  // Glenn's UX rule (preview-prodlike): closing or backgrounding the app on iPhone
+  // should always result in a fresh Dashboard on reopen, NOT a restore to the
+  // last page. So when the tab becomes hidden / page is being unloaded, we
+  // CLEAR the saved route instead of saving it. Hashchanges within an active
+  // session still save normally, which preserves intra-session refresh behavior.
+  function _clearHash() {
+    try {
+      const isField = window.location.pathname.includes('fieldtech') ||
+                      window.location.href.includes('wilbanks-fieldtech');
+      if (isField) return;
+      localStorage.removeItem(HASH_KEY);
+      localStorage.removeItem(HASH_AT_KEY);
+      sessionStorage.removeItem(HASH_KEY);
+      sessionStorage.removeItem(HASH_AT_KEY);
+    } catch {}
+  }
+  function _onVisibilityHidden() {
+    if (document.visibilityState === 'hidden') _clearHash();
+  }
   // Save immediately on load so the early-restore block has something on a
   // future refresh even if the user never navigates.
   _saveHash();
   window.addEventListener('hashchange', _saveHash);
-  document.addEventListener('visibilitychange', _saveHash);
-  window.addEventListener('pagehide', _saveHash);
-  window.addEventListener('beforeunload', _saveHash);
+  document.addEventListener('visibilitychange', _onVisibilityHidden);
+  window.addEventListener('pagehide', _clearHash);
+  window.addEventListener('beforeunload', _clearHash);
 
   // ── QB Login Nav Link (removed per user request) ─────────────────────────
 
