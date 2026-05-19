@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Wilbanks scroll debug</title>
+<style>
+  :root { --header-h: 57px; --bar-h: 90px; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0b1220; color: #fff; }
+  * { box-sizing: border-box; }
+
+  .app {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    height: 100dvh; /* same as the real app's --app-height fallback */
+  }
+
+  /* Mobile header — same dims as real app */
+  header.topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: #1f2937; border-bottom: 1px solid #334155;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 14px; z-index: 100;
+  }
+  header.topbar .title { font-weight: 600; font-size: 14px; }
+  header.topbar .right { display: flex; gap: 6px; }
+  header.topbar button {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: transparent; border: 1px solid #475569; color: #cbd5e1;
+  }
+
+  /* Main scroll area — same Tailwind-equivalent as real app:
+     flex-1 overflow-auto pt-[80px] pb-16 */
+  main {
+    flex: 1;
+    overflow: auto;
+    padding-top: 80px;
+    padding-bottom: 64px; /* = pb-16 */
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-top: 120px;
+    scroll-padding-bottom: 120px;
+  }
+
+  .form {
+    margin: 12px 14px;
+    padding: 14px;
+    border-radius: 8px;
+    background: rgba(148,163,184,0.08);
+    border: 1px solid #334155;
+  }
+  .form h2 { margin: 0 0 12px; font-size: 13px; font-weight: 700; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 10px 12px; border-radius: 6px;
+    border: 1px solid #475569; background: #0f172a; color: #fff;
+    font-size: 15px; /* prevents iOS zoom-on-focus */
+  }
+  .field textarea { min-height: 80px; resize: none; }
+  .btnrow {
+    display: flex; gap: 8px; justify-content: space-between;
+    margin-top: 8px;
+  }
+  .btn {
+    padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 700;
+    border: 1px solid #475569; background: transparent; color: #cbd5e1;
+  }
+  .btn.primary { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+  .btn.danger { color: #f87171; border-color: #f87171; }
+
+  /* Ask AI bar clone */
+  .askbar {
+    position: relative; z-index: 95; flex-shrink: 0;
+    border-top: 1px solid #334155; background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(8px);
+    padding: 10px 14px;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .askbar .bulb { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #475569; }
+  .askbar input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid #475569; background: #0b1220; color: #fff; font-size: 15px; }
+  .askbar .go { padding: 10px 14px; border-radius: 8px; background: #475569; color: #fff; border: 0; font-size: 13px; }
+
+  /* Live readout overlay — fixed to top-right, semi-transparent */
+  #readout {
+    position: fixed; top: 64px; right: 8px; z-index: 9999;
+    background: rgba(0,0,0,0.85); color: #00ff9c;
+    font: 11px/1.35 ui-monospace, Menlo, Monaco, monospace;
+    padding: 8px 10px; border-radius: 6px;
+    border: 1px solid #22c55e;
+    max-width: 200px;
+    white-space: pre;
+    pointer-events: none;
+  }
+  #snapBtn {
+    position: fixed; bottom: 110px; right: 12px; z-index: 9999;
+    padding: 10px 14px; border-radius: 8px;
+    background: #f59e0b; color: #000; font-weight: 700;
+    border: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="title">Scroll Debug · v1</div>
+    <div class="right">
+      <button>☼</button>
+      <button>≡</button>
+    </div>
+  </header>
+
+  <main id="scroller">
+    <div class="form" id="form">
+      <h2 id="formtop">Edit Equipment (debug clone)</h2>
+
+      <div class="field"><label>Make *</label><input id="f-make" value="LG" /></div>
+      <div class="field"><label>Model Number</label><input id="f-model" value="LSC27925ST" /></div>
+      <div class="field"><label>Serial Number</label><input id="f-serial" value="311MRJFON740" /></div>
+      <div class="field"><label>Category</label>
+        <select id="f-cat"><option>HVAC</option><option>Plumbing</option></select>
+      </div>
+      <div class="field"><label>Installed Date</label><input id="f-date" type="date" value="2026-05-19" /></div>
+      <div class="field"><label>Equipment Type</label><input id="f-type" value="Mini Split" /></div>
+      <div class="field"><label>Location</label><input id="f-loc" value="Main Level" /></div>
+      <div class="field"><label>Tech Notes</label><textarea id="f-notes" placeholder="Optional notes"></textarea></div>
+
+      <div class="btnrow" id="btnrow">
+        <button class="btn danger" id="b-del">Delete</button>
+        <div style="display:flex;gap:8px;">
+          <button class="btn" id="b-cancel">Cancel</button>
+          <button class="btn primary" id="b-save">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacer to simulate page that's already taller than viewport so scroll exists -->
+    <div style="height: 100px;"></div>
+  </main>
+
+  <div class="askbar">
+    <div class="bulb">💡</div>
+    <input placeholder="Ask anything..." id="askinput" />
+    <button class="go">Ask</button>
+  </div>
+</div>
+
+<div id="readout">measuring…</div>
+<button id="snapBtn">SNAPSHOT</button>
+
+<script>
+  const scroller = document.getElementById('scroller');
+  const btnrow = document.getElementById('btnrow');
+  const formtop = document.getElementById('formtop');
+  const readout = document.getElementById('readout');
+  const askbar = document.querySelector('.askbar');
+  const header = document.querySelector('.topbar');
+
+  const log = [];
+
+  function snap(label) {
+    const sRect = scroller.getBoundingClientRect();
+    const btnRect = btnrow.getBoundingClientRect();
+    const topRect = formtop.getBoundingClientRect();
+    const askRect = askbar.getBoundingClientRect();
+    const hdrRect = header.getBoundingClientRect();
+    const vv = window.visualViewport;
+    return {
+      t: Date.now(),
+      label,
+      scrollTop: scroller.scrollTop|0,
+      scrollHeight: scroller.scrollHeight|0,
+      clientHeight: scroller.clientHeight|0,
+      mainTop: sRect.top|0, mainBottom: sRect.bottom|0,
+      formTop: topRect.top|0,
+      btnTop: btnRect.top|0, btnBottom: btnRect.bottom|0,
+      askTop: askRect.top|0, askBottom: askRect.bottom|0,
+      hdrBottom: hdrRect.bottom|0,
+      winY: window.scrollY|0,
+      vvH: vv ? Math.round(vv.height) : -1,
+      winH: window.innerHeight|0,
+      sab: getComputedStyle(document.documentElement).getPropertyValue('--sab') || '?',
+      ua: navigator.userAgent.includes('iPhone') ? 'iPhone' : (navigator.userAgent.includes('iPad') ? 'iPad' : 'other'),
+    };
+  }
+
+  function render() {
+    const s = snap('live');
+    readout.textContent =
+      'sTop='+s.scrollTop+' / '+(s.scrollHeight-s.clientHeight)+'\n'+
+      'cH='+s.clientHeight+'  sH='+s.scrollHeight+'\n'+
+      'main='+s.mainTop+'..'+s.mainBottom+'\n'+
+      'form.top='+s.formTop+'\n'+
+      'btn='+s.btnTop+'..'+s.btnBottom+'\n'+
+      'ask='+s.askTop+'..'+s.askBottom+'\n'+
+      'hdr.bot='+s.hdrBottom+'\n'+
+      'winY='+s.winY+' winH='+s.winH+'\n'+
+      'vvH='+s.vvH;
+  }
+
+  scroller.addEventListener('scroll', render, { passive: true });
+  window.addEventListener('scroll', render, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', render);
+    window.visualViewport.addEventListener('scroll', render);
+  }
+  document.addEventListener('focusin', () => setTimeout(render, 50));
+  document.addEventListener('focusin', () => setTimeout(render, 400));
+  setInterval(render, 250);
+
+  document.getElementById('snapBtn').addEventListener('click', () => {
+    const s = snap('SNAP');
+    log.push(s);
+    const dump = JSON.stringify(log.slice(-5), null, 2);
+    readout.textContent = dump.length > 400 ? dump.slice(0, 400) + '…' : dump;
+    readout.style.color = '#fbbf24';
+    setTimeout(() => { readout.style.color = '#00ff9c'; render(); }, 4000);
+  });
+
+  render();
+</script>
+</body>
+</html>
