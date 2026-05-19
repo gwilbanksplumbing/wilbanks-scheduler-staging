@@ -20,11 +20,18 @@
   try {
     const _curHashEarly = window.location.hash || '';
     const _savedEarly = localStorage.getItem('wc_last_hash') || sessionStorage.getItem('wc_last_hash') || '';
+    const _savedAtEarly = parseInt(localStorage.getItem('wc_last_hash_at') || sessionStorage.getItem('wc_last_hash_at') || '0', 10) || 0;
     const _isFieldEarly = window.location.pathname.includes('fieldtech') ||
                           window.location.href.includes('wilbanks-fieldtech');
+    // Session-break threshold: if the last navigation was > 10 minutes ago,
+    // treat this as a fresh session and land on the Dashboard. Anything within
+    // 10 minutes is a reload/quick tab-flip and we restore the user's route.
+    const HASH_RESTORE_TTL_MS = 10 * 60 * 1000;
+    const _withinTtl = _savedAtEarly > 0 && (Date.now() - _savedAtEarly) <= HASH_RESTORE_TTL_MS;
     // Only restore for the dashboard app. Field-tech routes are short-lived (login → jobs).
     if (!_isFieldEarly && _savedEarly && _savedEarly !== '#/' && _savedEarly !== '#' &&
-        (!_curHashEarly || _curHashEarly === '#/' || _curHashEarly === '#')) {
+        (!_curHashEarly || _curHashEarly === '#/' || _curHashEarly === '#') &&
+        _withinTtl) {
       // Use replaceState so we don't add a Dashboard entry to history.
       try {
         history.replaceState(null, '', _savedEarly);
@@ -726,12 +733,16 @@
     window.__WC_LOGOUT = logout;
     // Restore the hash route from before the refresh (post-login path).
     // Handled synchronously at the top of auth-layer.js for hard refreshes;
-    // this branch covers the login → launchApp flow.
+    // this branch covers the login → launchApp flow. Respects the 10-minute
+    // TTL so a fresh login (logout → login, or session expired) lands on the
+    // Dashboard, not back on whatever page the user was on previously.
     try {
       const savedHash = localStorage.getItem('wc_last_hash') || sessionStorage.getItem('wc_last_hash');
+      const savedAt = parseInt(localStorage.getItem('wc_last_hash_at') || sessionStorage.getItem('wc_last_hash_at') || '0', 10) || 0;
+      const withinTtl = savedAt > 0 && (Date.now() - savedAt) <= (10 * 60 * 1000);
       const curHash = window.location.hash;
       const onRoot = !curHash || curHash === '#/' || curHash === '#';
-      if (onRoot && savedHash && savedHash !== '#/' && savedHash !== '#') {
+      if (onRoot && savedHash && savedHash !== '#/' && savedHash !== '#' && withinTtl) {
         const _applyHash = () => {
           try { window.location.hash = savedHash.replace(/^#/, ''); } catch {}
         };
@@ -1712,11 +1723,15 @@
           // Restore the hash route from before the refresh (token-valid path).
           // Handled synchronously at the top for hard refreshes; this only runs
           // when the hash wasn't restored early (e.g. sessionStorage path).
+          // Respects the 10-minute TTL so reopening the app after a session
+          // break lands on the Dashboard, not the last page.
           try {
             const savedHash = localStorage.getItem('wc_last_hash') || sessionStorage.getItem('wc_last_hash');
+            const savedAt = parseInt(localStorage.getItem('wc_last_hash_at') || sessionStorage.getItem('wc_last_hash_at') || '0', 10) || 0;
+            const withinTtl = savedAt > 0 && (Date.now() - savedAt) <= (10 * 60 * 1000);
             const curHash = window.location.hash;
             const onRoot = !curHash || curHash === '#/' || curHash === '#';
-            if (onRoot && savedHash && savedHash !== '#/' && savedHash !== '#') {
+            if (onRoot && savedHash && savedHash !== '#/' && savedHash !== '#' && withinTtl) {
               const _applyHash = () => {
                 try { window.location.hash = savedHash.replace(/^#/, ''); } catch {}
               };
@@ -1786,6 +1801,7 @@
   // that drops the URL hash on reload. Field-tech app routes are excluded —
   // they are short-lived (login → jobs) and shouldn't be restored on dashboard.
   const HASH_KEY = 'wc_last_hash';
+  const HASH_AT_KEY = 'wc_last_hash_at';
   function _saveHash() {
     try {
       const isField = window.location.pathname.includes('fieldtech') ||
@@ -1794,8 +1810,11 @@
       const h = window.location.hash || '#/';
       // Always reflect the current route, including '#/' (dashboard). This way
       // a refresh lands exactly on the page the user was viewing — dashboard
-      // included.
+      // included. The timestamp is used by the early-restore block to decide
+      // whether the route is fresh enough to restore (≤10min = restore, else
+      // land on Dashboard for a fresh session).
       localStorage.setItem(HASH_KEY, h);
+      localStorage.setItem(HASH_AT_KEY, String(Date.now()));
     } catch {}
   }
   // Save immediately on load so the early-restore block has something on a
