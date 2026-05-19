@@ -29,8 +29,11 @@
         }
       })();
     </script>
-    <script src="./auth-layer.js?v=preview-prodlike-eq-modal-portal"></script>
-    <script type="module" crossorigin src="./assets/index-Ceo1SMrS.js"></script>
+    <!-- Auth layer must run BEFORE React mounts so window.fetch is patched to inject JWT.
+         Lives at /auth-layer.js next to index.html. Required for all authenticated
+         direct fetch() calls in patched.tsx and pages/*.tsx that don't pass an Authorization header. -->
+    <script src="./auth-layer.js"></script>
+    <script type="module" crossorigin src="./assets/index-v8fTMBoM.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CghkOgUh.css">
   </head>
   <body>
