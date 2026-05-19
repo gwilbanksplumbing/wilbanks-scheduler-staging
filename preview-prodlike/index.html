@@ -14,7 +14,22 @@
     <link rel="manifest" href="./manifest.json" />
 
     <title>Wilbanks Company</title>
-    <script type="module" crossorigin src="./assets/index-DjSohJ-0.js"></script>
+
+    <!-- Apply saved theme class BEFORE React hydrates, to prevent a
+         flash of the wrong theme on refresh. Mirrors ThemeProvider:
+         saved value wins; otherwise default to dark. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('wc-theme');
+          var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-Eoa4kUqD.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BqGSMnfJ.css">
   </head>
   <body>
