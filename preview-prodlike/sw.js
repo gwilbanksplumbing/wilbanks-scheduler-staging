@@ -1,5 +1,5 @@
 // STAGING build — combined offline cache + push notification SW
-const CACHE = "wc-v85";
+const CACHE = "wc-v86";
 const OFFLINE = ["/", "/index.html"];
 
 const BADGE_KEY = "wilbanks_badge_count";
