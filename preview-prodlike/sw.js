@@ -1,11 +1,22 @@
 // STAGING build — combined offline cache + push notification SW
-const CACHE = "wc-v90";
-const OFFLINE = ["/", "/index.html"];
+const CACHE = "wc-v91";
+// Use scope-relative paths so this works at /wilbanks-scheduler-staging/preview-prodlike/
+// NOT at site root. addAll() rejects install if any URL 404s.
+// self.location.href is /wilbanks-scheduler-staging/preview-prodlike/sw.js
+// strip the filename to get the scope directory.
+const SCOPE_PATH = new URL("./", self.location.href).pathname;
+const OFFLINE = [SCOPE_PATH, SCOPE_PATH + "index.html"];
 
 const BADGE_KEY = "wilbanks_badge_count";
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
+  // Don't let cache pre-population block activation. Cache opportunistically;
+  // if it fails, log and proceed so the SW still becomes active for push.
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => c.addAll(OFFLINE))
+      .catch(err => { console.warn("[sw] precache failed, continuing:", err); })
+  );
   self.skipWaiting();
 });
 
