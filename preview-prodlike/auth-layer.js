@@ -690,35 +690,18 @@
   }
 
   function launchApp() {
-    dismissOverlay();
-    window.__WC_USER = currentUser;
-    window.__WC_LOGOUT = logout;
-    // Restore the hash route from before the refresh
-    try {
-      const savedHash = sessionStorage.getItem('wc_last_hash');
-      if (savedHash && savedHash !== '#/' && savedHash !== '#') {
-        sessionStorage.removeItem('wc_last_hash');
-        // Try immediately, then retry after React has mounted — wouter picks up
-        // window.location.hash changes via its own popstate/hashchange listeners
-        const _applyHash = () => {
-          try { window.location.hash = savedHash.replace(/^#/, ''); } catch {}
-        };
-        _applyHash();
-        setTimeout(_applyHash, 150);
-        setTimeout(_applyHash, 500);
-      }
-    } catch {}
-    // Sync display name into the field tech app's localStorage key
-    // so the top-left header always shows the logged-in user's name
-    syncFieldTechName(currentUser);
-    injectLogoutButton();
-    // Admin Tools nav is handled by the React app natively
-    // Inject Admin Tools nav directly - React renders before __WC_USER is set so we do it via DOM
-    setTimeout(function() { injectAdminToolsNav(); }, 300);
-    setTimeout(function() { injectAdminToolsNav(); }, 800);
-    setTimeout(function() { injectAdminToolsNav(); }, 1600);
-    // Start inactivity timer
-    startInactivityTimer();
+    // Post-login reload: React Query already fired its initial fetches against
+    // /api/appointments (and other endpoints) BEFORE the token existed, caching
+    // 401 failures. The cache lives in JS memory, so a full reload is the cleanest
+    // way to make sure the first fetches after auth carry the Bearer token from
+    // the start. The token is already persisted to localStorage by saveToken(),
+    // and wc_last_hash is preserved in sessionStorage so bootstrap() restores
+    // the route after the reload. Do NOT remove this reload without also adding
+    // a queryClient.invalidateQueries() bridge from auth-layer.js into the React
+    // app — otherwise the calendar will render empty until the 15s refetchInterval
+    // ticks (see patched.tsx, useQuery for /api/appointments). Documented in the
+    // blueprint, deploy v-fix-post-login-empty-calendar-2026-05-20.
+    window.location.reload();
   }
 
   // ── Inactivity timeout ─────────────────────────────────────────────────────
