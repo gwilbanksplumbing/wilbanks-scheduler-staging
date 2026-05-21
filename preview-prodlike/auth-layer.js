@@ -1482,14 +1482,14 @@
       `;
       Object.assign(btn.style, {
         display: 'flex', alignItems: 'center', gap: '12px',
-        width: '100%', padding: '10px 12px',
+        width: '100%', padding: '6px 12px',
         background: 'transparent', border: 'none',
         borderRadius: '6px', cursor: 'pointer',
         fontSize: '14px', fontWeight: '500',
         color: '#ef4444',
         fontFamily: 'inherit',
         transition: 'background 0.15s',
-        marginTop: '4px',
+        marginTop: '2px',
       });
       btn.addEventListener('mouseenter', () => btn.style.background = 'rgba(239,68,68,0.1)');
       btn.addEventListener('mouseleave', () => btn.style.background = 'transparent');
