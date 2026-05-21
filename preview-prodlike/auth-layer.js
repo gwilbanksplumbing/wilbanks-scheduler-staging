@@ -704,7 +704,11 @@
     // Bearer token. No reload needed. We also set a global flag so the React
     // component can detect auth-ready if it mounted AFTER this dispatch.
     //
-    // Make sure the root is visible (bootstrap may have hidden it).
+    // CRITICAL: tear down the auth overlay (login form, Face ID prompt, etc.)
+    // and unhide the React root. The old reload-based flow did this implicitly
+    // by refreshing the page; the new flow must do it explicitly or the user
+    // sees the overlay frozen on screen with the app invisible behind it.
+    try { dismissOverlay(); } catch {}
     try {
       const root = document.getElementById('root');
       if (root) root.style.display = '';
@@ -720,7 +724,19 @@
       // so the user never gets stuck on an empty calendar.
       console.warn('[auth-layer] wc:auth-ready dispatch failed, falling back to reload', e);
       window.location.reload();
+      return;
     }
+    // The pre-v76 reload caused bootstrap() to re-run AFTER auth, which is what
+    // wired up Admin Tools nav, Record Payment buttons, Logout button, and the
+    // inactivity timer. Without reload, we must invoke them here. These match
+    // the calls in bootstrap()'s post-token-validation block.
+    try {
+      setTimeout(function() { try { injectAdminToolsNav(); injectRecordPaymentButtons(); injectRecordPaymentDetailPage(); } catch {} }, 300);
+      setTimeout(function() { try { injectAdminToolsNav(); injectRecordPaymentButtons(); injectRecordPaymentDetailPage(); } catch {} }, 800);
+      setTimeout(function() { try { injectAdminToolsNav(); injectRecordPaymentButtons(); injectRecordPaymentDetailPage(); } catch {} }, 1600);
+      try { startInactivityTimer(); } catch {}
+      setTimeout(function() { try { injectLogoutButton(); } catch {} }, 1500);
+    } catch {}
   }
 
   // ── Inactivity timeout ─────────────────────────────────────────────────────
