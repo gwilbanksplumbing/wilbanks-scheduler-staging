@@ -1,5 +1,5 @@
 // STAGING build — combined offline cache + push notification SW
-const CACHE = "wc-v118";
+const CACHE = "wc-v119";
 // Use scope-relative paths so this works at /wilbanks-scheduler-staging/preview-prodlike/
 // NOT at site root. addAll() rejects install if any URL 404s.
 // self.location.href is /wilbanks-scheduler-staging/preview-prodlike/sw.js
