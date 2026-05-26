@@ -1639,14 +1639,8 @@
 
   function logout() {
     clearToken();
-    // Navigate to a fresh URL instead of reload() — bypasses iOS Safari bfcache
-    // which can restore the page from memory without re-running bootstrap.
-    try {
-      const base = window.location.pathname;
-      window.location.replace(base + '?lo=' + Date.now());
-    } catch {
-      window.location.reload();
-    }
+    // Full page reload — matches production exactly
+    window.location.reload();
   }
 
   // Expose logout globally
