@@ -1761,6 +1761,24 @@
   window.addEventListener('pagehide', _saveHash);
   window.addEventListener('beforeunload', _saveHash);
 
+  // ── bfcache guard ─────────────────────────────────────────────────────────
+  // If Safari restores this page from bfcache after a logout navigation,
+  // _token is still set in memory but localStorage is cleared.
+  // Force a full reload so bootstrap runs fresh and shows the login screen.
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+      // Page was restored from bfcache — check if token is gone from storage
+      const stored = (function() {
+        try { return localStorage.getItem('wc_auth_token') || sessionStorage.getItem('wc_auth_token'); } catch { return null; }
+      })();
+      if (!stored) {
+        // Token gone but bfcache restored old state — force fresh load
+        _token = null;
+        window.location.replace(window.location.pathname + '?lo=' + Date.now());
+      }
+    }
+  });
+
   // ── QB Login Nav Link (removed per user request) ─────────────────────────
 
   function canUseQBLogin() { return false; }
