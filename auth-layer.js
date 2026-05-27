@@ -7,7 +7,7 @@
  * - Monkey-patches fetch to inject Authorization headers on Railway calls
  */
 (function () {
-  const API = "https://wilbanks-server-staging.up.railway.app";
+  const API = "https://wilbanks-server-production.up.railway.app";
   const TOKEN_KEY = "wc_auth_token"; // sessionStorage — clears when tab closes... we use memory
   const USERNAME_KEY = "wc_saved_username";
   const WEBAUTHN_PROMPT_KEY = "wc_webauthn_prompted"; // so we only ask once
@@ -65,7 +65,7 @@
   const _origFetch = window.fetch.bind(window);
   window.fetch = function (input, init = {}) {
     const url = typeof input === "string" ? input : (input?.url || "");
-    if (url.includes("wilbanks-server-staging.up.railway.app") && _token) {
+    if (url.includes("wilbanks-server-production.up.railway.app") && _token) {
       init = {
         ...init,
         headers: {
@@ -1394,7 +1394,7 @@
       numRow.style.cssText = 'display:flex;align-items:center;gap:8px;';
       numRow.innerHTML = '<span style="color:hsl(var(--muted-foreground))">Invoice #:</span>' +
         '<span style="color:hsl(var(--foreground));font-weight:500">' + appt.qbInvoiceNum + '</span>' +
-        (appt.qbInvoiceId ? '<a href="https://wilbanks-server-staging.up.railway.app/api/qb-invoice-pdf/' + id + '" target="_blank" style="color:hsl(var(--primary));font-size:12px;text-decoration:none;margin-left:6px;">View Invoice</a>' : '');
+        (appt.qbInvoiceId ? '<a href="https://wilbanks-server-production.up.railway.app/api/qb-invoice-pdf/' + id + '" target="_blank" style="color:hsl(var(--primary));font-size:12px;text-decoration:none;margin-left:6px;">View Invoice</a>' : '');
       info.appendChild(numRow);
     }
 
