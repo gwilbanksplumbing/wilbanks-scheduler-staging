@@ -10,6 +10,49 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <title>Wilbanks Scheduler</title>
+    <!--
+      ─────────────────────────────────────────────────────────────────────
+      Fresh-deploy auto-reload (STAGING)
+      ─────────────────────────────────────────────────────────────────────
+      GitHub Pages serves index.html with `cache-control: max-age=600`, so a
+      normal (non-hard) page load can use a 10-minute-stale index.html that
+      still references the PREVIOUS auth-layer.js?v=... build. That made the
+      Sign Out / Admin Tools injection appear missing until a hard refresh.
+
+      This script runs on every load: it re-fetches index.html from the
+      network (bypassing the HTTP cache) and compares the auth-layer.js
+      version embedded there against the one this page actually loaded with.
+      If they differ, a new deploy is live, so it reloads ONCE (guarded by
+      sessionStorage to prevent any reload loop). No service-worker or cache
+      logic is touched — this is purely an index.html freshness check.
+    -->
+    <script>
+      (function () {
+        // Version this page was actually loaded with (from the auth-layer tag below).
+        var LOADED_VERSION = "20260529-213800";
+        var RELOAD_GUARD = "wc_autoreload_" + LOADED_VERSION;
+        try {
+          // If we already reloaded for this version this session, don't loop.
+          if (sessionStorage.getItem(RELOAD_GUARD)) return;
+        } catch (e) { /* sessionStorage unavailable — fail open, skip check */ return; }
+
+        // Re-fetch our own index.html straight from the network.
+        fetch(location.pathname, { cache: "no-store" })
+          .then(function (r) { return r.ok ? r.text() : null; })
+          .then(function (html) {
+            if (!html) return;
+            var m = html.match(/auth-layer\.js\?v=([0-9A-Za-z-]+)/);
+            if (!m) return;
+            var liveVersion = m[1];
+            if (liveVersion && liveVersion !== LOADED_VERSION) {
+              // A newer deploy is live. Mark guard, then reload once to pick it up.
+              try { sessionStorage.setItem(RELOAD_GUARD, "1"); } catch (e) {}
+              location.reload();
+            }
+          })
+          .catch(function () { /* network hiccup — ignore, page still works */ });
+      })();
+    </script>
     <script src="/wilbanks-scheduler-staging/auth-layer.js?v=20260529-213800"></script>
     <script type="module" crossorigin src="/wilbanks-scheduler-staging/assets/index-Dbt7X7po.js"></script>
     <link rel="stylesheet" crossorigin href="/wilbanks-scheduler-staging/assets/index-PyTOPI5L.css">
