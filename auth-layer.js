@@ -785,8 +785,6 @@
 
   // ── User Management ────────────────────────────────────────────────────────
   function injectAdminToolsNav() {
-    // React app renders Admin Tools natively
-    return;
     const role = currentUser?.role;
     if (role !== 'admin') return;
     const isAdmin = true;
@@ -1448,9 +1446,7 @@
   }
 
   function injectLogoutButton() {
-    // React app handles this natively
     document.getElementById('wc-logout-btn')?.remove();
-    return;
 
     // Build a sidebar-style logout button (dashboard desktop)
     function buildSidebarBtn() {

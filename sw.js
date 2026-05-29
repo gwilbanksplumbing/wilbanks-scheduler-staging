@@ -1,4 +1,4 @@
-// cache-bust: 20260529-212535 (logo fix: restore logo assets + canonical logo-DmC-dsba.jpg)
+// cache-bust: 20260529-213800 (re-enable Sign Out + Admin Tools injection in auth-layer)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
