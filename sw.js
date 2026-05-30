@@ -1,4 +1,4 @@
-// cache-bust: 20260530-234500 (fix: iOS AI bar floating up with gap below - always track visualViewport height)
+// cache-bust: 20260531-000000 (fix: installed PWA AI bar floating up - use max viewport height when keyboard closed)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
