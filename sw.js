@@ -1,4 +1,4 @@
-// cache-bust: 20260530-171500 (feature: multi-recipient HVAC invoice picker + email validation in customer editors)
+// cache-bust: 20260530-172500 (fix: validate recipient email in live Send-Invoice-via-Gmail dialog)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
