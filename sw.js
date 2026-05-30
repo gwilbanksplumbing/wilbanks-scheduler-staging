@@ -1,4 +1,4 @@
-// cache-bust: 20260530-223000 (fix: iOS calendar peeking below AI panel - app shell 100vh -> 100dvh)
+// cache-bust: 20260530-234500 (fix: iOS AI bar floating up with gap below - always track visualViewport height)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
