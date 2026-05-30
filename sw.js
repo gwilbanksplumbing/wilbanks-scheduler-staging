@@ -1,4 +1,4 @@
-// cache-bust: 20260529-220000 (inject Sign Out + Admin Tools on fresh login via launchApp)
+// cache-bust: 20260530-020000 (duplicate-customers panel: keeper radio + merge + block delete when jobs>0)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
