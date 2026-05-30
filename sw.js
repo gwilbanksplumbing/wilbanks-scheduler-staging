@@ -1,4 +1,4 @@
-// cache-bust: 20260531-021000 (fix: pin AskAiBar to bottom + content padding clears the bar)
+// cache-bust: 20260531-030000 (fix: match production layout exactly - 100vh + in-flow AI bar)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
