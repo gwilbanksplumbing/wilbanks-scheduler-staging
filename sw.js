@@ -1,4 +1,4 @@
-// cache-bust: 20260531-000000 (fix: installed PWA AI bar floating up - use max viewport height when keyboard closed)
+// cache-bust: 20260531-010000 (debug: temporary on-screen viewport badge for standalone-PWA gap)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
