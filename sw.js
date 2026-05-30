@@ -1,4 +1,4 @@
-// cache-bust: 20260530-213000 (fix: month calendar bleeding through AI results panel on mobile - opaque AI bar)
+// cache-bust: 20260530-223000 (fix: iOS calendar peeking below AI panel - app shell 100vh -> 100dvh)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
