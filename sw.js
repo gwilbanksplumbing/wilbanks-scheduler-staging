@@ -1,4 +1,4 @@
-// cache-bust: 20260530-221000 (Plumbing/QB Preview Invoice button green to match HVAC; bundle index-COIO6ELq, css index-D6LehClm)
+// cache-bust: 20260530-223500 (Plumbing/QB invoice: open QB tab via qbInvoiceUrl, invoice left unsent for manual send; bundle index-KoshaAwU, css index-D6LehClm)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
