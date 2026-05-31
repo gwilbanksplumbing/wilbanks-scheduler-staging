@@ -1,4 +1,4 @@
-// cache-bust: 20260530-215300 (revert: restore calendar-clean dashboard bundle index-CRcN-say; back out broken calendar code that shipped in 211500)
+// cache-bust: 20260530-220000 (calendar-clean dashboard + Customer No. under Date on invoice/estimate previews; bundle index-_72dpuyg)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
