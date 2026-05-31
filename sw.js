@@ -1,4 +1,4 @@
-// cache-bust: 20260531-113600 (clean rebuild from src b3bab4b; customer-search prefix fix is server-side; bundle index-KoshaAwU.js, css index-D6LehClm)
+// cache-bust: 20260531-1145 (calendar month-view flush to AI bar; bundle index-YnZyPQ4_.js, css index-B7xUGg7m)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
