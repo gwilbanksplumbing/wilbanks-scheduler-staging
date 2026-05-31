@@ -1,4 +1,4 @@
-// cache-bust: 20260530-192600 (feat: auto-populate all customer emails as removable pills in invoice send dialog)
+// cache-bust: 20260530-195800 (feat: auto-populate recipients as removable pills in the dropdown invoice send dialog (RtiActions HvacSendInvoiceFlow))
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
