@@ -1,4 +1,4 @@
-// cache-bust: 20260602-1352 (Priority feature: Service Details checkbox, amber chip accent bar, Priority pill in detail+dialog; JS index-6vo7TZYX.js, CSS index-CwdNYNcw.css)
+// cache-bust: 20260602-1402 (Priority feature + fix: amber chip accent bar now visible via inline style; JS index-B2yI55Wc.js, CSS index-CwdNYNcw.css)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
