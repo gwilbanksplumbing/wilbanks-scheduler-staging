@@ -1,4 +1,4 @@
-// cache-bust: 20260602-0805 (AI-bar duplicate Merge optimistic + toast feedback; bundle index-Nqnc2pxe.js, css index-D0a8jZap.css)
+// cache-bust: 20260602-0828 (merge consumes server duplicates payload directly; bundle index-CyW9_Vun.js, css index-D0a8jZap.css)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
