@@ -1,4 +1,4 @@
-// cache-bust: 20260602-1625 (on-site payment blue Collected pill on ready-to-invoice + send-invoice; JS index-DrfpxcGB.js, CSS index-C9SLkwKQ.css)
+// cache-bust: 20260603-1715 (fix: day/week drag-reschedule shifts endTime so appt actually moves; JS index-Dk-_2q-2.js, CSS index-C9SLkwKQ.css)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
