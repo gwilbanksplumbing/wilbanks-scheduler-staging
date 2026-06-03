@@ -1,4 +1,4 @@
-// cache-bust: 20260603-1722 (fix: day-view drag-reschedule uses dropped slot time; JS index-BE-G5OXW.js, CSS index-C9SLkwKQ.css)
+// cache-bust: 20260603-1738 (fix: day-view DESKTOP+touch drag-reschedule resolves drop hour from pointer position; JS index-DW8Kf-RH.js, CSS index-C9SLkwKQ.css)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
