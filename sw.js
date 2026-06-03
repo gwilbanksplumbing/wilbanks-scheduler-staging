@@ -1,4 +1,4 @@
-// cache-bust: 20260603-1748dbg (DEBUG day-view drag logging; JS index-BZlR8_gG.js)
+// cache-bust: 20260603-1755dbg (day-view drag: suppress trailing click, allow same-day; JS index-Brs457Ri.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
