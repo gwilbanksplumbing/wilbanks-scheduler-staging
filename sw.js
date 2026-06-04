@@ -1,4 +1,4 @@
-// cache-bust: 20260603-2035split (split-payment stacked pills per method + Total; JS index-JW_qZHau.js)
+// cache-bust: 20260603-2039nototal (split-payment stacked pills per method, no Total pill; JS index-uzxvO48W.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
