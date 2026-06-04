@@ -1,4 +1,4 @@
-// cache-bust: 20260603-2228notesseed (Estimate Notes auto-seed from latest estimate; JS index-8CjeK27n.js)
+// cache-bust: 20260604-1340priochk (New Appointment: Priority checkbox always visible, resets on service-type change; JS index-BiWqc71-.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
