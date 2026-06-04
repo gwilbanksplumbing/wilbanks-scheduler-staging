@@ -1,4 +1,4 @@
-// cache-bust: 20260604-1340priochk (New Appointment: Priority checkbox always visible, resets on service-type change; JS index-BiWqc71-.js)
+// cache-bust: 20260604-1420priopink (Priority checkbox accent fluorescent pink ff10f0; JS index-CRuqzLpM.js CSS index-V4ZrJKAc.css)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
