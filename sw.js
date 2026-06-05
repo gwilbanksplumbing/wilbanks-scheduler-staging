@@ -1,4 +1,4 @@
-// cache-bust: 20260605-1835selectarrow (dark-mode select arrow visible; JS index-DDOoeLRn.js CSS index-CxJjEsEq.css)
+// cache-bust: 20260605-2026scrollfix (calendar scroll no longer opens New Appointment; JS index-CAVDX6cF.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
