@@ -1,4 +1,4 @@
-// cache-bust: 20260605-211535 wc-v156 sidebar-remove-borders
+// cache-bust: 20260605-211857 wc-v157 sidebar-remove-footer-line
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
