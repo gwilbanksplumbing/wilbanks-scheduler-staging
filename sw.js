@@ -1,4 +1,4 @@
-// cache-bust: 20260604-1500mapskey (restore Google Maps Places key -> address autocomplete works again, Customer Info + Service Street; JS index-CyDehQip.js)
+// cache-bust: 20260604-2145custinfo (Customer Info header non-collapsible; JS index-z6zur-bu.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
