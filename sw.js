@@ -1,4 +1,4 @@
-// cache-bust: 20260605-1831financials (rename Finance->Financials; JS index-DVimnJg_.js)
+// cache-bust: 20260605-1835selectarrow (dark-mode select arrow visible; JS index-DDOoeLRn.js CSS index-CxJjEsEq.css)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
