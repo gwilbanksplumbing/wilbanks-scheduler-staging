@@ -1,4 +1,4 @@
-// cache-bust: 20260605-1805legend (removed Cancelled from calendar legend; JS index-rWA9rlWO.js)
+// cache-bust: 20260605-1831financials (rename Finance->Financials; JS index-DVimnJg_.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
