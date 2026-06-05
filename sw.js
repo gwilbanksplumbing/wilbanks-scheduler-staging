@@ -1,4 +1,4 @@
-// cache-bust: 20260604-2145custinfo (Customer Info header non-collapsible; JS index-z6zur-bu.js)
+// cache-bust: 20260605-1622finance (Finance module added; JS index-DXaWzDdo.js)
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
