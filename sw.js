@@ -1,4 +1,4 @@
-// cache-bust: 20260605-2026scrollfix (calendar scroll no longer opens New Appointment; JS index-CAVDX6cF.js)
+// cache-bust: 20260605-203534 wc-v152 month-scroll-fix
 // STAGING build — separate cache namespace
 // Wilbanks Company — Push Notification Service Worker
 const BADGE_KEY = "wilbanks_badge_count";
