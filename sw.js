@@ -1,5 +1,5 @@
-// cache-bust: 20260605-224325 wc-v158 hvac-payment-edit-undo
-const CACHE = "wc-v158";
+// cache-bust: 20260606-2101 wc-v159 qb-reconcile-sync
+const CACHE = "wc-v159";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
