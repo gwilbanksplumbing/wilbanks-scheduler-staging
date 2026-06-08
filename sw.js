@@ -1,4 +1,4 @@
-// cache-bust: 20260608-2302 wc-v231b inspect-uses-API_BASE
+// cache-bust: 20260608-2308 wc-v231c inspect-with-repair-action
 const CACHE = "wc-v231";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
