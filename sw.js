@@ -1,5 +1,5 @@
-// cache-bust: 20260606-2342 wc-v205 tech-color-swimlanes
-const CACHE = "wc-v205";
+// cache-bust: 20260606-2342 wc-v206 tech-color-swimlanes
+const CACHE = "wc-v206";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
