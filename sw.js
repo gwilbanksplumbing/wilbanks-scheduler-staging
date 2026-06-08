@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2120 wc-v225 back-button-scroll-restore
-const CACHE = "wc-v225";
+// cache-bust: 20260608-2130 wc-v226 audit-log-status-changes
+const CACHE = "wc-v226";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
