@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2340 wc-v235 dashboard-nav-reset-filters
-const CACHE = "wc-v235";
+// cache-bust: 20260608-2343 wc-v236 finance-useeffect-import-fix
+const CACHE = "wc-v236";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
