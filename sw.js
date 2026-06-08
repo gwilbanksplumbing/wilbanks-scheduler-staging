@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2347 wc-v237 dashboard-reset-event-clears-filters
-const CACHE = "wc-v237";
+// cache-bust: 20260608-2349 wc-v238 dashboard-force-reset-flag-on-remount
+const CACHE = "wc-v238";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
