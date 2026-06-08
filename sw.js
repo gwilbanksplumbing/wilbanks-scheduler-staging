@@ -1,4 +1,4 @@
-// cache-bust: 20260608-2257 wc-v231 inspect-button-on-appt-detail
+// cache-bust: 20260608-2302 wc-v231b inspect-uses-API_BASE
 const CACHE = "wc-v231";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
