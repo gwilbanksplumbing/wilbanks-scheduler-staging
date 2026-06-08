@@ -80,6 +80,18 @@
   // ── Auth state ─────────────────────────────────────────────────────────────
   let currentUser = null;
 
+  // wc-v205: expose the logged-in role to the React app so Settings can gate the
+  // admin-only "Admin Tools" tab. Persist to localStorage (synchronous read on
+  // mount) and dispatch an event (live update if role resolves after mount).
+  function publishUserRole(u) {
+    try {
+      var r = (u && u.role) ? String(u.role) : '';
+      if (r) localStorage.setItem('wc_user_role', r);
+      else localStorage.removeItem('wc_user_role');
+      window.dispatchEvent(new CustomEvent('wc:user-role', { detail: r }));
+    } catch (e) {}
+  }
+
   function getSavedUsername() {
     try { return localStorage.getItem(USERNAME_KEY) || ""; } catch { return ""; }
   }
@@ -631,6 +643,7 @@
     saveToken(token);
     currentUser = user;
     window.__WC_USER = user;
+    publishUserRole(user);
 
     // Determine which app we're on
     const isDashboard = !window.location.pathname.includes('fieldtech') &&
@@ -695,6 +708,7 @@
   function launchApp() {
     dismissOverlay();
     window.__WC_USER = currentUser;
+    publishUserRole(currentUser);
     window.__WC_LOGOUT = logout;
     // Restore the hash route from before the refresh
     try {
@@ -1664,6 +1678,7 @@
 
   function logout() {
     clearToken();
+    try { localStorage.removeItem('wc_user_role'); } catch (e) {}
     // Full page reload — matches production exactly
     window.location.reload();
   }
@@ -1691,6 +1706,7 @@
           saveToken(token);
           currentUser = user;
           window.__WC_USER = user;
+          publishUserRole(user);
           window.__WC_LOGOUT = logout;
           // Token valid — show app and inject UI elements
           if (root) root.style.display = "";
