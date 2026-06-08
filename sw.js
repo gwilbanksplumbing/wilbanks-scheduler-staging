@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2045 wc-v224c default-cal-view-remount
-const CACHE = "wc-v224c";
+// cache-bust: 20260608-2100 wc-v224d clear-cal-mode-stash
+const CACHE = "wc-v224d";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));

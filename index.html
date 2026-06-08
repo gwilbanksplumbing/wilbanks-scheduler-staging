@@ -56,7 +56,7 @@
 
     <!--
       ─────────────────────────────────────────────────────────────────────
-      Fresh-deploy auto-update (STAGING) — wc-v224c rewrite
+      Fresh-deploy auto-update (STAGING) — wc-v224d rewrite
       ─────────────────────────────────────────────────────────────────────
       THE PROBLEM (esp. installed iOS PWAs): GitHub Pages serves index.html
       with `cache-control: max-age=600`, and the service worker also caches
@@ -78,7 +78,7 @@
     <script>
       (function () {
         // JS bundle hash this page actually loaded with (kept in sync at deploy).
-        var LOADED_JS = "index--z6Fla6T.js";
+        var LOADED_JS = "index-37Wn-McF.js";
         function clearSwCachesAndReload() {
           var done = false;
           function go() {
@@ -114,8 +114,8 @@
           .catch(function () { /* network hiccup — ignore, page still works */ });
       })();
     </script>
-    <script src="/wilbanks-scheduler-staging/auth-layer.js?v=20260608-2045wcv224c"></script>
-    <script type="module" crossorigin src="/wilbanks-scheduler-staging/assets/index--z6Fla6T.js"></script>
+    <script src="/wilbanks-scheduler-staging/auth-layer.js?v=20260608-2100wcv224d"></script>
+    <script type="module" crossorigin src="/wilbanks-scheduler-staging/assets/index-37Wn-McF.js"></script>
     <link rel="stylesheet" crossorigin href="/wilbanks-scheduler-staging/assets/index-DKP8QD28.css">
   </head>
   <body>
