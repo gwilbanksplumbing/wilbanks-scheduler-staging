@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2210 wc-v227 iphone-scroll-touch-flyout-filter-by-tech
-const CACHE = "wc-v227";
+// cache-bust: 20260608-2225 wc-v228 appointment-card-mobile-overflow
+const CACHE = "wc-v228";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
