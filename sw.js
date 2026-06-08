@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2308 wc-v231c inspect-with-repair-action
-const CACHE = "wc-v231";
+// cache-bust: 20260608-2315 wc-v232 customer-name-search-panel
+const CACHE = "wc-v232";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
