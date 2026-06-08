@@ -1,5 +1,5 @@
-// cache-bust: 20260608-2235 wc-v229 dashboard-grid-cols-1-and-main-overflow-x-hidden
-const CACHE = "wc-v229";
+// cache-bust: 20260608-2245 wc-v230 customer-sync-audit-admin-tool
+const CACHE = "wc-v230";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
