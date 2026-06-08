@@ -1,5 +1,5 @@
-// cache-bust: 20260608-1545 wc-v223 user-badge
-const CACHE = "wc-v223";
+// cache-bust: 20260608-2010 wc-v224 per-tab-session
+const CACHE = "wc-v224";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));

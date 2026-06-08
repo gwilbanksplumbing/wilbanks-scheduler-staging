@@ -29,16 +29,39 @@
   function saveToken(token) {
     _token = token;
     try {
-      // Use localStorage for both apps so JWT survives iOS Safari suspending the tab.
-      // The server enforces the 30-day expiry, so this is safe.
-      localStorage.setItem(TOKEN_KEY, token);
+      if (isFieldApp()) {
+        // Field tech app — PWA, single-tenant, single-user-per-device. localStorage
+        // primary so the session survives iOS Safari tab suspension + home-screen relaunch.
+        localStorage.setItem(TOKEN_KEY, token);
+      } else {
+        // Dashboard (wc-v224 Phase 1: per-tab session isolation).
+        //   sessionStorage = "who am I in this tab" (source of truth, isolated per tab)
+        //   localStorage   = seed for NEW tabs only (so opening a new tab doesn't force re-login)
+        // Logout in any tab clears the seed; other open tabs keep their sessionStorage.
+        sessionStorage.setItem(TOKEN_KEY, token);
+        localStorage.setItem(TOKEN_KEY, token);
+      }
     } catch {}
   }
   function loadToken() {
     if (_token) return _token;
     try {
-      // Check localStorage first, fall back to sessionStorage for legacy sessions
-      _token = localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || null;
+      if (isFieldApp()) {
+        _token = localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || null;
+      } else {
+        // Dashboard: sessionStorage primary. If empty, seed from localStorage
+        // (one-time hop for new tabs) and copy into sessionStorage so this tab
+        // owns its session from here on.
+        let t = sessionStorage.getItem(TOKEN_KEY);
+        if (!t) {
+          const seed = localStorage.getItem(TOKEN_KEY);
+          if (seed) {
+            try { sessionStorage.setItem(TOKEN_KEY, seed); } catch {}
+            t = seed;
+          }
+        }
+        _token = t || null;
+      }
     } catch {}
     return _token;
   }
@@ -682,7 +705,8 @@
       // authenticated (WEBAUTHN_VALID_KEY not set) — wipe and re-prompt
       const stale = (hasWebAuthn || alreadyPrompted) && !credentialValid;
       if (stale) {
-        const tok = _token || localStorage.getItem(TOKEN_KEY) || '';
+        // wc-v224: prefer in-memory; fall back to either storage tier.
+        const tok = _token || sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY) || '';
         const wipe = tok
           ? _origFetch(API + '/api/auth/webauthn', { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + tok } }).catch(() => {})
           : Promise.resolve();
@@ -1680,6 +1704,9 @@
     // wc-v219: full cleanup so next user lands fresh on default route
     // wc-v222: also clears wc_prefs_cache_* (per-user pre-paint cache) and
     //         the legacy hyphenated wc-theme key.
+    // wc-v224: parallel sweep of sessionStorage wc_* keys (Phase 1 per-tab
+    //         session isolation — sessionStorage is now the source of truth
+    //         for the dashboard's active session).
     // Clear hash + saved hash so we don't restore prior admin's last screen
     try { sessionStorage.removeItem('wc_last_hash'); } catch (e) {}
     try { window.location.hash = ''; } catch (e) {}
@@ -1698,6 +1725,17 @@
         if (k === 'wc-theme') { toRemove.push(k); continue; }
       }
       for (var j = 0; j < toRemove.length; j++) localStorage.removeItem(toRemove[j]);
+    } catch (e) {}
+    // wc-v224: parallel sessionStorage sweep — wc_* keys in this tab only.
+    // Other tabs are unaffected; their sessionStorage is isolated.
+    try {
+      var ssRemove = [];
+      for (var si = 0; si < sessionStorage.length; si++) {
+        var sk = sessionStorage.key(si);
+        if (!sk) continue;
+        if (sk.indexOf('wc_') === 0) ssRemove.push(sk);
+      }
+      for (var sj = 0; sj < ssRemove.length; sj++) sessionStorage.removeItem(ssRemove[sj]);
     } catch (e) {}
     // Clear field-tech session marker as well
     try { sessionStorage.removeItem('techName'); } catch (e) {}
@@ -1828,7 +1866,8 @@
     if (e.persisted) {
       // Page was restored from bfcache — check if token is gone from storage
       const stored = (function() {
-        try { return localStorage.getItem('wc_auth_token') || sessionStorage.getItem('wc_auth_token'); } catch { return null; }
+        // wc-v224: dashboard sessionStorage is source of truth; check both.
+        try { return sessionStorage.getItem('wc_auth_token') || localStorage.getItem('wc_auth_token'); } catch { return null; }
       })();
       if (!stored) {
         // Token gone but bfcache restored old state — force fresh load

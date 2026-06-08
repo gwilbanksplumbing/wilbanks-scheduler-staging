@@ -27,13 +27,17 @@
          server hydration). Decodes user_id from the JWT payload — no
          signature verification needed; we're only using it as a cache key,
          not for auth. Default = dark. All paths fail closed to dark so a
-         missing/blocked storage layer never flashes light. -->
+         missing/blocked storage layer never flashes light.
+         wc-v224: read sessionStorage first to match auth-layer per-tab
+         session priority (Phase 1 per-tab isolation). localStorage is the
+         seed for new tabs; this script runs before auth-layer's seed-hop,
+         so we still need the localStorage fallback for fresh-tab boots. -->
     <script>
       (function () {
         document.documentElement.classList.add('dark');
         try {
-          var token = localStorage.getItem('wc_auth_token') ||
-                      sessionStorage.getItem('wc_auth_token');
+          var token = sessionStorage.getItem('wc_auth_token') ||
+                      localStorage.getItem('wc_auth_token');
           if (!token) return;
           var parts = token.split('.');
           if (parts.length !== 3) return;
@@ -54,7 +58,7 @@
 
     <!--
       ─────────────────────────────────────────────────────────────────────
-      Fresh-deploy auto-update (STAGING) — wc-v223 rewrite
+      Fresh-deploy auto-update (STAGING) — wc-v224 rewrite
       ─────────────────────────────────────────────────────────────────────
       THE PROBLEM (esp. installed iOS PWAs): GitHub Pages serves index.html
       with `cache-control: max-age=600`, and the service worker also caches
@@ -76,7 +80,7 @@
     <script>
       (function () {
         // JS bundle hash this page actually loaded with (kept in sync at deploy).
-        var LOADED_JS = "index-CaucMJM2.js";
+        var LOADED_JS = "index-BYnDKUDb.js";
         function clearSwCachesAndReload() {
           var done = false;
           function go() {
@@ -112,8 +116,8 @@
           .catch(function () { /* network hiccup — ignore, page still works */ });
       })();
     </script>
-    <script src="/wilbanks-scheduler-staging/auth-layer.js?v=20260608-1545wcv223"></script>
-    <script type="module" crossorigin src="/wilbanks-scheduler-staging/assets/index-CaucMJM2.js"></script>
+    <script src="/wilbanks-scheduler-staging/auth-layer.js?v=20260608-2010wcv224"></script>
+    <script type="module" crossorigin src="/wilbanks-scheduler-staging/assets/index-BYnDKUDb.js"></script>
     <link rel="stylesheet" crossorigin href="/wilbanks-scheduler-staging/assets/index-DKP8QD28.css">
   </head>
   <body>
