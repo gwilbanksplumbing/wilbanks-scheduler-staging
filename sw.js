@@ -1,5 +1,5 @@
-// cache-bust: 20260609-1735 wc-v249c invoice-order reflow + remit-differs toggle + strip hardcoded fallbacks
-const CACHE = "wc-v249c";
+// cache-bust: 20260609-1758 wc-v250a logo upload (3-mode: icon/lockup/none) + dynamic alt text + per-tenant branding in Sidebar
+const CACHE = "wc-v250a";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
