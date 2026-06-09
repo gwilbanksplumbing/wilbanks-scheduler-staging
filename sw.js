@@ -1,5 +1,5 @@
-// cache-bust: 20260609-0021 wc-v242 cleanup-diagnostic-endpoints
-const CACHE = "wc-v242";
+// cache-bust: 20260609-0208 wc-v243 fix-login-route-restore-regression
+const CACHE = "wc-v243";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));

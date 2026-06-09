@@ -728,19 +728,18 @@
     window.__WC_USER = currentUser;
     publishUserRole(currentUser);
     window.__WC_LOGOUT = logout;
-    // Restore the hash route from before the refresh
+    // wc-v243: A FRESH LOGIN must land on the default route. Do NOT restore
+    // wc_last_hash here — that key is for the existing-session refresh path in
+    // bootstrap() (same tab, same session, page reloaded). If it's still in
+    // sessionStorage at this point, it's stale (e.g. the prior session's
+    // logout sweep raced with the pagehide listener that re-wrote it). Wipe
+    // it defensively and ensure the URL hash is clean so wouter renders the
+    // default landing screen.
+    try { sessionStorage.removeItem('wc_last_hash'); } catch {}
     try {
-      const savedHash = sessionStorage.getItem('wc_last_hash');
-      if (savedHash && savedHash !== '#/' && savedHash !== '#') {
-        sessionStorage.removeItem('wc_last_hash');
-        // Try immediately, then retry after React has mounted — wouter picks up
-        // window.location.hash changes via its own popstate/hashchange listeners
-        const _applyHash = () => {
-          try { window.location.hash = savedHash.replace(/^#/, ''); } catch {}
-        };
-        _applyHash();
-        setTimeout(_applyHash, 150);
-        setTimeout(_applyHash, 500);
+      if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') {
+        // Clear the hash without triggering a navigation/scroll — use replaceState.
+        history.replaceState(null, '', window.location.pathname + window.location.search);
       }
     } catch {}
     // Sync display name into the field tech app's localStorage key
@@ -1701,6 +1700,13 @@
     // wc-v224: parallel sweep of sessionStorage wc_* keys (Phase 1 per-tab
     //         session isolation — sessionStorage is now the source of truth
     //         for the dashboard's active session).
+    // wc-v243: latch a flag so the pagehide/beforeunload _saveHash() listener
+    // (which fires during the reload at the end of this function) cannot
+    // race and re-write wc_last_hash after we've cleared it. Without the
+    // latch, _saveHash() would persist the current hash one last time and
+    // the NEXT login would restore the prior session's route — the exact
+    // regression we're fixing here.
+    window.__WC_LOGGING_OUT = true;
     // Clear hash + saved hash so we don't restore prior admin's last screen
     try { sessionStorage.removeItem('wc_last_hash'); } catch (e) {}
     try { window.location.hash = ''; } catch (e) {}
@@ -1844,6 +1850,11 @@
   // so we save on hashchange and visibilitychange instead.
   const HASH_KEY = 'wc_last_hash';
   function _saveHash() {
+    // wc-v243: never write wc_last_hash during a logout teardown. The logout
+    // function sets __WC_LOGGING_OUT, then clears the hash and removes this
+    // key, then triggers a full reload. The pagehide / beforeunload events
+    // fire mid-teardown and would otherwise re-persist a stale route.
+    if (window.__WC_LOGGING_OUT) return;
     try {
       const h = window.location.hash;
       if (h && h !== '#/' && h !== '#') {
