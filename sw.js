@@ -1,5 +1,5 @@
-// cache-bust: 20260609-1647 wc-v249a settings-wired invoice/estimate templates
-const CACHE = "wc-v249a";
+// cache-bust: 20260609-1710 wc-v249b char picker + split city/state/zip fields
+const CACHE = "wc-v249b";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
