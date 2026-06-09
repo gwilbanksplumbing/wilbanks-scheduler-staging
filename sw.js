@@ -1,5 +1,5 @@
 // cache-bust: 20260609-1247 wc-v246 new-appt-reorder-emails-contacts-below-zip
-const CACHE = "wc-v246";
+const CACHE = "wc-v248";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
