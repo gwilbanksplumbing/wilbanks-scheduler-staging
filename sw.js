@@ -1,5 +1,5 @@
-// cache-bust: 20260609-1950 wc-v252 add Viewer role + inline per-user role editor with confirm dialog
-const CACHE = "wc-v252";
+// cache-bust: 20260609-2010 wc-v252b Edit Role button in action row + dialog (replaces inline editor)
+const CACHE = "wc-v252b";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
