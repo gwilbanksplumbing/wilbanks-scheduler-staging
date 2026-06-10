@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1840 wc-v260b Map: align status badge + legend colors to chipTheme.statusHex (calendar/FieldTech parity) — on_the_way amber, in_progress purple, completed green, cancelled red
-const CACHE = "wc-v260b";
+// cache-bust: 20260610-1830 wc-v261 Phase B: tech avatar UI (upload, crop modal, preview, delete, SMS consent toggle) + TechAvatar component
+const CACHE = "wc-v261";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
