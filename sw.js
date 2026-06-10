@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1425 wc-v255b Map InfoWindow !important override on .gm-style-iw-d
-const CACHE = "wc-v255b";
+// cache-bust: 20260610-1432 wc-v255c InfoWindow override widened (iw + iw-c + iw-d, +webkit-text-fill-color)
+const CACHE = "wc-v255c";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
