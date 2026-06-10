@@ -1,5 +1,5 @@
-// cache-bust: 20260609-2120 wc-v254 hide Company Name field for Residential customers in NewAppointment + DraggableCustomerEditor + Customers edit modal
-const CACHE = "wc-v254";
+// cache-bust: 20260610-1330 wc-v255 Map View (Google Maps, numbered pins, color by tech) + tenant_features SaaS gating + geocode caching on appointments
+const CACHE = "wc-v255";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
