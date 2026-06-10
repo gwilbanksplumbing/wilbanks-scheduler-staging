@@ -1,5 +1,5 @@
-// cache-bust: 20260609-2010 wc-v252b Edit Role button in action row + dialog (replaces inline editor)
-const CACHE = "wc-v252b";
+// cache-bust: 20260609-2030 wc-v252c Sidebar branding: fix event name wc:user-ready -> wc:auth-ready so new accounts load logo on first login
+const CACHE = "wc-v252c";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
