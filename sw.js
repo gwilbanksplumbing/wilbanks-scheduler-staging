@@ -1,5 +1,5 @@
-// cache-bust: 20260609-2055 wc-v253 Outstanding tile threshold configurable in Settings -> Notifications (15/30/45/60/90/120 days)
-const CACHE = "wc-v253";
+// cache-bust: 20260609-2120 wc-v254 hide Company Name field for Residential customers in NewAppointment + DraggableCustomerEditor + Customers edit modal
+const CACHE = "wc-v254";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
