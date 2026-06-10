@@ -1,5 +1,5 @@
-// cache-bust: 20260609-1930 wc-v251i wrap Dashboard title+stats in elevated bg-card with shadow visible in dark mode
-const CACHE = "wc-v251i";
+// cache-bust: 20260609-1935 wc-v251j AskAiBar footer bg-card + light-tint upward shadow visible in dark mode
+const CACHE = "wc-v251j";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
