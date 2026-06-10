@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2140 wc-v270c: replace placeholder favicon (globe) with real Wilbanks W logo — staging/icons/ dir was missing so favicon 404'd; copied prod's branded icon-192/512 into staging/icons/ and root, also updated src/public/icons so next build doesn't regress
-const CACHE = "wc-v270c";
+// cache-bust: 20260610-2155 wc-v270d: reschedule dropdown — split into hard-block (start inside existing appt, disabled) vs soft-warn (start free but 2h duration would overflow, amber + selectable). 7 AM is now clickable on Jun 16 with a small warn label, instead of being silently disabled.
+const CACHE = "wc-v270d";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
