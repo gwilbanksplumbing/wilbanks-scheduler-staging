@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1900 wc-v262 Phase C: TechAvatar rolled into sidebar (mobile Filter by Tech + desktop Techs flyout)
-const CACHE = "wc-v262";
+// cache-bust: 20260610-1925 wc-v263 fix: useTechPills re-fetches on auth-ready (techs were empty in flyout after fresh load)
+const CACHE = "wc-v263";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
