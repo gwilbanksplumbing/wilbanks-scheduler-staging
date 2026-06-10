@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1820 wc-v260a Map: faster refresh (15s + staleTime:0 + refetchOnMount:always) so new appts/status changes appear quickly when switching to Map tab
-const CACHE = "wc-v260a";
+// cache-bust: 20260610-1840 wc-v260b Map: align status badge + legend colors to chipTheme.statusHex (calendar/FieldTech parity) — on_the_way amber, in_progress purple, completed green, cancelled red
+const CACHE = "wc-v260b";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
