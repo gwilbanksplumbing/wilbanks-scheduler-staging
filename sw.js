@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1645 wc-v257d Map InfoWindow: kill Google default header + tighter padding so content sits at top
-const CACHE = "wc-v257d";
+// cache-bust: 20260610-1700 wc-v257e Map InfoWindow: wider bubble + restore close X with CSS specificity win
+const CACHE = "wc-v257e";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
