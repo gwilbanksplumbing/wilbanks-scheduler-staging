@@ -1,44 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Match production EXACTLY. Two staging-only mistakes were fixed here:
-         (1) `viewport-fit=cover` was REMOVED. In an installed standalone PWA it
-             changes how iOS applies the bottom safe-area inset, which pushed the
-             in-flow "Ask anything" bar UP, leaving a gap below it. Prod uses
-             `maximum-scale=1` and no viewport-fit, so we match it.
-         (2) The manifest + apple-touch-icon used ABSOLUTE paths (`/manifest.json`,
-             `/icons/icon-192.png`) that resolve to the domain root, not this
-             subdirectory, so they 404'd — iOS then showed a black "W" fallback
-             icon. Switched to RELATIVE `./` paths pointing at the files that
-             actually exist at the staging root. -->
+    <!-- IMPORTANT: do NOT add `viewport-fit=cover`. In an installed standalone
+         PWA it changes how iOS applies the bottom safe-area inset, which pushes
+         the in-flow "Ask anything" bar UP and leaves a dead gap below it.
+         Production ships `maximum-scale=1` with no viewport-fit; we match it. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <link rel="icon" type="image/png" href="./icon-192.png" />
-    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-    <link rel="manifest" href="./manifest.json" />
+
+    <!-- PWA meta (for field tech install). Use RELATIVE (`./`) icon/manifest
+         paths so they resolve under the deploy subdirectory instead of the
+         domain root (absolute `/` paths 404 on GitHub Pages project sites and
+         make iOS fall back to a black "W" icon). -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="WB Staging" />
+    <meta name="apple-mobile-web-app-title" content="Wilbanks Preview" />
     <meta name="theme-color" content="#09090b" />
-    <title>Wilbanks Scheduler</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <title>Wilbanks Company</title>
 
     <!-- wc-v222: Pre-paint theme application from per-user cache.
+         wc-v224b: FULLY STRICT per-tab login — sessionStorage only, no
+         localStorage fallback. Each tab forces a fresh login.
+         See Wilbanks_SaaS_Auth_Session_Architecture_Plan.md Phase 1.
          Reads wc_prefs_cache_<userId> (written by PreferencesProvider after
          server hydration). Decodes user_id from the JWT payload — no
          signature verification needed; we're only using it as a cache key,
          not for auth. Default = dark. All paths fail closed to dark so a
-         missing/blocked storage layer never flashes light.
-         wc-v224b: FULLY STRICT per-tab login — sessionStorage only, no
-         localStorage fallback. A fresh tab will have no token here, fall
-         through to default-dark, and the login screen will render. -->
+         missing/blocked storage layer never flashes light. -->
     <script>
       (function () {
+        // Default: dark. Only flip to light if we have a confirmed light pref
+        // for THIS user.
         document.documentElement.classList.add('dark');
         try {
           var token = sessionStorage.getItem('wc_auth_token');
           if (!token) return;
           var parts = token.split('.');
           if (parts.length !== 3) return;
+          // base64url -> base64
           var b64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
           while (b64.length % 4) b64 += '=';
           var payload = JSON.parse(atob(b64));
@@ -50,75 +54,26 @@
           if (cache && cache.wc_theme === 'light') {
             document.documentElement.classList.remove('dark');
           }
-        } catch (e) { /* storage blocked — stay on dark */ }
-      })();
-    </script>
-
-    <!--
-      ─────────────────────────────────────────────────────────────────────
-      Fresh-deploy auto-update (STAGING) — wc-v224e rewrite
-      ─────────────────────────────────────────────────────────────────────
-      THE PROBLEM (esp. installed iOS PWAs): GitHub Pages serves index.html
-      with `cache-control: max-age=600`, and the service worker also caches
-      index.html + the hashed bundle. On iOS the installed PWA can keep serving
-      an OLD index.html (pointing at the OLD JS hash) across launches, so new
-      deploys never appear without a hard refresh or a delete/reinstall.
-
-      THE FIX: on every load, re-fetch index.html straight from the network
-      (no-store) and compare the live JS bundle hash against the one THIS page
-      loaded with. The JS hash changes on EVERY deploy, so this is a reliable
-      freshness signal (the old check keyed off the auth-layer ?v= stamp, which
-      does NOT change on JS-only deploys — that's why iPhone updates were stuck).
-
-      When a newer hash is live we proactively (a) tell the active service
-      worker to drop its caches and (b) hard-reload once (guarded by
-      sessionStorage to prevent any loop). This updates installed iOS PWAs in
-      place — no delete/reinstall required.
-    -->
-    <script>
-      (function () {
-        // JS bundle hash this page actually loaded with (kept in sync at deploy).
-        var LOADED_JS = "index-BPkoTKKB.js";
-        function clearSwCachesAndReload() {
-          var done = false;
-          function go() {
-            if (done) return; done = true;
-            location.reload();
-          }
-          try {
-            if ('caches' in window) {
-              caches.keys().then(function (keys) {
-                return Promise.all(keys.map(function (k) { return caches.delete(k); }));
-              }).then(go, go);
-              // Safety: never hang on a stuck caches API.
-              setTimeout(go, 1500);
-            } else { go(); }
-          } catch (e) { go(); }
+        } catch (e) {
+          // Storage blocked / parse error — stay on dark default.
         }
-        try {
-          var GUARD = "wc_autoreload_" + LOADED_JS;
-          if (sessionStorage.getItem(GUARD)) return; // already updated this session
-        } catch (e) { return; /* sessionStorage unavailable — fail open */ }
-        fetch(location.pathname, { cache: "no-store" })
-          .then(function (r) { return r.ok ? r.text() : null; })
-          .then(function (html) {
-            if (!html) return;
-            var m = html.match(/assets\/(index-[A-Za-z0-9_-]+\.js)/);
-            if (!m) return;
-            var liveJs = m[1];
-            if (liveJs && liveJs !== LOADED_JS) {
-              try { sessionStorage.setItem("wc_autoreload_" + LOADED_JS, "1"); } catch (e) {}
-              clearSwCachesAndReload();
-            }
-          })
-          .catch(function () { /* network hiccup — ignore, page still works */ });
       })();
     </script>
-    <script src="/wilbanks-scheduler-staging/auth-layer.js?v=20260610-1948wcv268"></script>
-    <script type="module" crossorigin src="/wilbanks-scheduler-staging/assets/index-BPkoTKKB.js"></script>
-    <link rel="stylesheet" crossorigin href="/wilbanks-scheduler-staging/assets/index-BB5lYEi9.css">
+    <!-- Auth layer must run BEFORE React mounts so window.fetch is patched to inject JWT.
+         Lives at /auth-layer.js next to index.html. Required for all authenticated
+         direct fetch() calls in patched.tsx and pages/*.tsx that don't pass an Authorization header. -->
+    <script src="./auth-layer.js"></script>
+    <script type="module" crossorigin src="./assets/index-CxTuxhnH.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BB5lYEi9.css">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1948 wc-v268 fix: useTechPills now uses react-query (same proven pattern as Dashboard)
-const CACHE = "wc-v268";
+// cache-bust: 20260610-2122 wc-v269 fix: Tech edit dialog no longer sends `active` field (prevents Randy-inactive regression)
+const CACHE = "wc-v269";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
