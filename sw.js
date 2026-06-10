@@ -1,5 +1,5 @@
-// cache-bust: 20260609-1905 wc-v251f textarea JS autosize floor responsive (28 desktop / 44 mobile)
-const CACHE = "wc-v251f";
+// cache-bust: 20260609-1908 wc-v251g remove rail border-r + footer border-t, add upward shadow on footer
+const CACHE = "wc-v251g";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
