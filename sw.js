@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2122 wc-v269 fix: Tech edit dialog no longer sends `active` field (prevents Randy-inactive regression)
-const CACHE = "wc-v269";
+// cache-bust: 20260610-2018 wc-v269b: confirm dialog on per-tech active toggle (prevents one-tap accidental deactivation)
+const CACHE = "wc-v269b";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
