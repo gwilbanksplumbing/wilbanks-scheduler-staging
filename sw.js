@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2125 wc-v270a: reschedule dialog — (1) match server's blocking filter (skip cancelled/completed/soft-deleted) so non-blocking history doesn't show as conflicts, (2) replace per-slot inline customer labels with a single "Current bookings" panel listing each existing same-tech appt with its actual time range, (3) keep dropdown slots disabled-but-unlabeled
-const CACHE = "wc-v270a";
+// cache-bust: 20260610-2135 wc-v270b: reschedule date picker now auto-closes after picking a day (was: stayed open until outside-click)
+const CACHE = "wc-v270b";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
