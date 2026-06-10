@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1930 wc-v264 fix: useTechPills polls until loaded (auth-ready race made flyout empty until user hovered)
-const CACHE = "wc-v264";
+// cache-bust: 20260610-1934 wc-v265 fix: useTechPills always commits response + console.info (was silently ignoring empty arrays)
+const CACHE = "wc-v265";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
