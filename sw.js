@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1945 wc-v267 fix: SW install no longer fails on missing OFFLINE URLs (blocked v262+ activation, PWA was stuck on old bundle)
-const CACHE = "wc-v267";
+// cache-bust: 20260610-1948 wc-v268 fix: useTechPills now uses react-query (same proven pattern as Dashboard)
+const CACHE = "wc-v268";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
