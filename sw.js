@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1730 wc-v259 Map: dashed polylines connecting stops in route order, per-tech colored
-const CACHE = "wc-v259";
+// cache-bust: 20260610-1745 wc-v260 Map: status badges on pins (green check for completed) + 30s auto-refresh + legend
+const CACHE = "wc-v260";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
