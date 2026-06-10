@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1715 wc-v258 Map: MarkerClusterer for dense days (CDN-loaded, graceful fallback)
-const CACHE = "wc-v258";
+// cache-bust: 20260610-1730 wc-v259 Map: dashed polylines connecting stops in route order, per-tech colored
+const CACHE = "wc-v259";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
