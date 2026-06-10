@@ -1,5 +1,5 @@
-// cache-bust: 20260609-2030 wc-v252c Sidebar branding: fix event name wc:user-ready -> wc:auth-ready so new accounts load logo on first login
-const CACHE = "wc-v252c";
+// cache-bust: 20260609-2055 wc-v253 Outstanding tile threshold configurable in Settings -> Notifications (15/30/45/60/90/120 days)
+const CACHE = "wc-v253";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
