@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1415 wc-v255a Map InfoWindow contrast fix (explicit colors + opacity:1)
-const CACHE = "wc-v255a";
+// cache-bust: 20260610-1425 wc-v255b Map InfoWindow !important override on .gm-style-iw-d
+const CACHE = "wc-v255b";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
