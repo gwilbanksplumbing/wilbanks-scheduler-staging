@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1630 wc-v257c Map: card sits flush against Ask bar (no gap) + tighter top padding
-const CACHE = "wc-v257c";
+// cache-bust: 20260610-1645 wc-v257d Map InfoWindow: kill Google default header + tighter padding so content sits at top
+const CACHE = "wc-v257d";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
