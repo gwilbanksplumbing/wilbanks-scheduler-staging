@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2030 wc-v269c: alias lucide Map -> MapIcon to prevent minifier collapsing `new Map()` into icon constructor ("ly is not a constructor" / "Iy is not a constructor" crash)
-const CACHE = "wc-v269c";
+// cache-bust: 20260610-2115 wc-v270: reschedule dialog now flags busy days (amber dot in date picker) and disables time slots that would overlap an existing same-tech appt on the chosen date
+const CACHE = "wc-v270";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
