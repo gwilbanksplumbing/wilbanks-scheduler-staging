@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2135 wc-v270b: reschedule date picker now auto-closes after picking a day (was: stayed open until outside-click)
-const CACHE = "wc-v270b";
+// cache-bust: 20260610-2140 wc-v270c: replace placeholder favicon (globe) with real Wilbanks W logo — staging/icons/ dir was missing so favicon 404'd; copied prod's branded icon-192/512 into staging/icons/ and root, also updated src/public/icons so next build doesn't regress
+const CACHE = "wc-v270c";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
