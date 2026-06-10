@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2155 wc-v270d: reschedule dropdown — split into hard-block (start inside existing appt, disabled) vs soft-warn (start free but 2h duration would overflow, amber + selectable). 7 AM is now clickable on Jun 16 with a small warn label, instead of being silently disabled.
-const CACHE = "wc-v270d";
+// cache-bust: 20260610-2210 wc-v270e: reschedule dropdown — removed soft-warn tier entirely. ONLY hard-block slots whose start falls inside an existing appt. No amber, no "if 2h" hint. Server's full-interval overlap check on save is the safety net. Glenn's mental model: only literal start-membership counts.
+const CACHE = "wc-v270e";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
