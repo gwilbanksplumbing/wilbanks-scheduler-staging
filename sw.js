@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1432 wc-v255c InfoWindow override widened (iw + iw-c + iw-d, +webkit-text-fill-color)
-const CACHE = "wc-v255c";
+// cache-bust: 20260610-1445 wc-v255d InfoWindow bumped to 14px / weight 600 across all lines
+const CACHE = "wc-v255d";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
