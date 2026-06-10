@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1745 wc-v260 Map: status badges on pins (green check for completed) + 30s auto-refresh + legend
-const CACHE = "wc-v260";
+// cache-bust: 20260610-1820 wc-v260a Map: faster refresh (15s + staleTime:0 + refetchOnMount:always) so new appts/status changes appear quickly when switching to Map tab
+const CACHE = "wc-v260a";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
