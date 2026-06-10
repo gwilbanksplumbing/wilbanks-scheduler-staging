@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1530 wc-v256 Tech-required enforcement: NewAppointment + AppointmentDetail + server POST/PATCH guards
-const CACHE = "wc-v256";
+// cache-bust: 20260610-1600 wc-v257 Map mobile: pin tap pans map up + bottom card shows stop number + tech color dot
+const CACHE = "wc-v257";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
