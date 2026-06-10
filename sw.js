@@ -1,5 +1,5 @@
-// cache-bust: 20260610-1445 wc-v255d InfoWindow bumped to 14px / weight 600 across all lines
-const CACHE = "wc-v255d";
+// cache-bust: 20260610-1530 wc-v256 Tech-required enforcement: NewAppointment + AppointmentDetail + server POST/PATCH guards
+const CACHE = "wc-v256";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
