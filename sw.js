@@ -1,5 +1,5 @@
-// cache-bust: 20260611-1545 wc-v271: Settings IA cleanup (Phase 1). Admin Tools is now a label-only menu header (no clickable landing page); Integrations renamed Connections (QuickBooks + Text Messaging + Email channels); new Customer Messaging pill holds the comms toggles moved out of the removed Notifications tab; Outstanding-invoice threshold moved to Billing. New JS index-BeJM-ZNv.js, CSS unchanged index-BHjRZB38.css. (wc-v270z inlined dispatcher-notes label on chips.)
-const CACHE = "wc-v271";
+// cache-bust: 20260611-1548 wc-v272: Settings IA Phase 2. Replaced the horizontal tab strip + Admin Tools hover-flyout with a persistent vertical left-rail sub-nav inside Settings (Option B, chrome-only — body content groupings unchanged). Every destination is one click; no hover, no clickable-parent ambiguity. Top group: Company / Dashboard / Billing. "Admin" section: Connections / Customer Messaging / Users & Roles / Industries & Trades / Audit Log / Customer Sync / Deleted Jobs. About at the bottom. On phone the rail collapses into a sticky "Settings section" dropdown. New JS index-CmFRTrA_.js, new CSS index-CO-CW-0o.css. (wc-v271 was Phase 1 IA cleanup.)
+const CACHE = "wc-v272";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
