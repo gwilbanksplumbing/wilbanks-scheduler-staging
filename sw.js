@@ -1,5 +1,5 @@
-// cache-bust: 20260611-1104 wc-v270u: fix recurring-appointment reschedule ("This and all future events") failing with "Reschedule failed". The Dashboard Confirm-Reschedule handler PATCHed /api/appointments/:id/reschedule-future but never sent the required fromDate field, so the server returned 400 "fromDate required" -> generic failure toast. Now sends fromDate=appt.scheduledDate (same as AppointmentDetail's update-future call). Also: failure toast now surfaces the server's actual error message instead of a blind "Failed". New JS index-DKQuz8yc.js (CSS index-D4OTVTTE.css unchanged).
-const CACHE = "wc-v270u";
+// cache-bust: 20260611-1155 wc-v270v: fix appointment Edit hiding a stored end time. The Multi-Day/Multi-Hour toggle + its End Date/End Time fields were driven ONLY by editData.endDate, AND editData was never seeded with the record's endDate/endTime on entering edit mode. So a same-day record with only an endTime saved (e.g. appt #440, 1:00-4:00 PM) showed the toggle OFF with no End Time field, leaving the stored end invisible/uneditable - and a Save could drop it. Now: (1) edit state seeds endDate/endTime from the record; (2) the toggle + fields key off endDate OR endTime. New JS index-CQ7w5eih.js (CSS index-D4OTVTTE.css unchanged).
+const CACHE = "wc-v270v";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
