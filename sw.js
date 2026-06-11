@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2107 wc-v270l: Map view avatars (Phase D). Side list rows, the pin InfoWindow popup, and the mobile bottom card now show the tech's photo (with a status-colored ring + stop-number corner badge), falling back to initials. Map PIN graphics also inline the face when the avatar can be fetched cross-origin; until R2 CORS is enabled, pins stay as numbered colored circles (graceful fallback, no errors). New JS index-Nq8gbaJG.js + CSS index-D4OTVTTE.css.
-const CACHE = "wc-v270l";
+// cache-bust: 20260610-2120 wc-v270m: Asset host flipped to the Cloudflare custom domain assets.wilbankscompany.com (was the pub-*.r2.dev dev URL, which ignored CORS). With CORS now honored, the Map PIN graphics inline the tech's face (status-colored ring + stop-number badge); side list / popup / bottom card faces from wc-v270l unchanged. Phase D pin faces complete. New JS index-BQvWtoWJ.js (CSS index-D4OTVTTE.css unchanged).
+const CACHE = "wc-v270m";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
