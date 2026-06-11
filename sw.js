@@ -1,5 +1,5 @@
-// cache-bust: 20260611-0926 wc-v270r: REAL CRASH FIX (confirmed via source-map decode of the live stack trace). The List-view crash "Cannot read properties of null (reading 'replace')" was Dashboard.tsx line 2002: statusFilter.replace("_"," "). statusFilter was NULL, not "all". Root cause in PreferencesProvider.tsx usePreference get(): it only fell back to the default when the stored pref was `undefined`, so a pref persisted as `null` (cleared/legacy) leaked through. Fixed get() to fall back for BOTH null AND undefined (=== undefined -> == null), plus a defensive (statusFilter ?? "all") guard at the call site. New JS index-D2ijUvMb.js (CSS index-D4OTVTTE.css unchanged). The prior wc-v270q global-search null-coalescing was unrelated and is retained.
-const CACHE = "wc-v270r";
+// cache-bust: 20260611-0958 wc-v270s: hardening follow-up to the wc-v270r crash fix. (1) SW fetch handler now clones the response SYNCHRONOUSLY before the async caches.open(), fixing the repeating "Response body is already used" console errors. (2) PreferencesProvider set() now refuses to persist null/undefined, so a null pref can never round-trip through the server (JSON "null") and crash a caller again — closes the write side of the wc-v270r data path (read side already fixed). New JS (rebuilt; CSS index-D4OTVTTE.css unchanged).
+const CACHE = "wc-v270s";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
@@ -21,8 +21,16 @@ self.addEventListener("activate", e => {
 });
 self.addEventListener("fetch", e => {
   if (e.request.url.includes("/api/") || e.request.url.includes("/uploads/")) return;
+  // wc-v270s: clone the response SYNCHRONOUSLY, before any await. The old code
+  // called res.clone() inside the async caches.open(...).then() callback, by
+  // which point the body returned to the page could already be consumed,
+  // throwing "Failed to execute 'clone' on 'Response': Response body is already
+  // used" on every cacheable request. Clone first, then stash the copy.
   e.respondWith(
-    fetch(e.request).then(res => { caches.open(CACHE).then(c => c.put(e.request, res.clone())); return res; })
-      .catch(() => caches.match(e.request))
+    fetch(e.request).then(res => {
+      const copy = res.clone();
+      caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
+      return res;
+    }).catch(() => caches.match(e.request))
   );
 });
