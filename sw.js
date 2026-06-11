@@ -1,5 +1,5 @@
-// cache-bust: 20260611-1420 wc-v270z: inline the dispatcher-notes label on the same line as the text — bold "Dispatcher Notes: " prefix then the note flows inline, no wasted separate line. New JS index-Clw3Kl6g.js, CSS index-BHjRZB38.css. (wc-v270y put the label on its own uppercase line; wc-v270x first added notes to chips.)
-const CACHE = "wc-v270z";
+// cache-bust: 20260611-1545 wc-v271: Settings IA cleanup (Phase 1). Admin Tools is now a label-only menu header (no clickable landing page); Integrations renamed Connections (QuickBooks + Text Messaging + Email channels); new Customer Messaging pill holds the comms toggles moved out of the removed Notifications tab; Outstanding-invoice threshold moved to Billing. New JS index-BeJM-ZNv.js, CSS unchanged index-BHjRZB38.css. (wc-v270z inlined dispatcher-notes label on chips.)
+const CACHE = "wc-v271";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
