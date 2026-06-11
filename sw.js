@@ -1,5 +1,5 @@
-// cache-bust: 20260611-1410 wc-v270y: polish the Day-view dispatcher-notes display — add a small uppercase "Dispatcher Notes" label above the note text so the chip reads professionally instead of raw floating text. Same always-show + fill-remaining-height + clean-truncate behavior. New JS index-BiLdmsJf.js, new CSS index-DIT1agOa.css. (wc-v270x first added notes to chips; wc-v270w bearer-token robustness; end-time fix was wc-v270v + device cache clear.)
-const CACHE = "wc-v270y";
+// cache-bust: 20260611-1420 wc-v270z: inline the dispatcher-notes label on the same line as the text — bold "Dispatcher Notes: " prefix then the note flows inline, no wasted separate line. New JS index-Clw3Kl6g.js, CSS index-BHjRZB38.css. (wc-v270y put the label on its own uppercase line; wc-v270x first added notes to chips.)
+const CACHE = "wc-v270z";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
