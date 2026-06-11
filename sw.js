@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2120 wc-v270m: Asset host flipped to the Cloudflare custom domain assets.wilbankscompany.com (was the pub-*.r2.dev dev URL, which ignored CORS). With CORS now honored, the Map PIN graphics inline the tech's face (status-colored ring + stop-number badge); side list / popup / bottom card faces from wc-v270l unchanged. Phase D pin faces complete. New JS index-BQvWtoWJ.js (CSS index-D4OTVTTE.css unchanged).
-const CACHE = "wc-v270m";
+// cache-bust: 20260610-2125 wc-v270n: Multi-tenant / SaaS prep refactor. ASSETS_PUBLIC_URL in src/lib/techAvatar.ts is now a build-time config (VITE_ASSETS_PUBLIC_URL) with assets.wilbankscompany.com as the fallback, so the asset host is a one-line flip when the platform brand domain is registered. Tenancy stays in the object PATH (tenants/{slug}/...), host is platform-shared. ZERO behavior change: the built bundle is byte-identical to wc-v270m (same JS index-BQvWtoWJ.js / CSS index-D4OTVTTE.css md5), so pin faces and all avatars are unaffected. SW version bumped only to keep the milestone marker in sync across repos.
+const CACHE = "wc-v270n";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
