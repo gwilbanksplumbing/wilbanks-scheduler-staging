@@ -1,5 +1,5 @@
-// cache-bust: 20260610-2012 wc-v270k: Dashboard "Tech view" (horizontal lane grid) lane headers now render <TechAvatar> (uploaded photo when set, initials-on-color fallback) instead of always showing initials — so tech photos now show in Tech view too, matching the Techs dropdown and Settings list. Unassigned lane keeps the dashed "?" chip.
-const CACHE = "wc-v270k";
+// cache-bust: 20260610-2107 wc-v270l: Map view avatars (Phase D). Side list rows, the pin InfoWindow popup, and the mobile bottom card now show the tech's photo (with a status-colored ring + stop-number corner badge), falling back to initials. Map PIN graphics also inline the face when the avatar can be fetched cross-origin; until R2 CORS is enabled, pins stay as numbered colored circles (graceful fallback, no errors). New JS index-Nq8gbaJG.js + CSS index-D4OTVTTE.css.
+const CACHE = "wc-v270l";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
