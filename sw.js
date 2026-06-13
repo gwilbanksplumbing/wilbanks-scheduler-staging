@@ -1,5 +1,5 @@
-// cache-bust: 20260613-0700 wc-v284: same iPhone overlap fix for the not-created Invoice row — flex-wrap row + Convert to Invoice button grow sm:grow-0 so "Not created yet" is no longer clipped on narrow viewports. New JS index-Cyddg8yo.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v284";
+// cache-bust: 20260613-0702 wc-v285: preview modal footer (Back/Send) was pushed off-screen on iPhone — switched modal height from 92vh to 92dvh + maxHeight 100% and added safe-area top/bottom padding on the overlay so the footer always stays visible. New JS index-lxs0ZC7c.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v285";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
