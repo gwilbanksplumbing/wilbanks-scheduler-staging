@@ -1,5 +1,5 @@
-// cache-bust: 20260613-0700 wc-v283: fix empty-state Estimate row overlap on iPhone — added flex-wrap so the Create Estimate button wraps full-width below the label on narrow viewports (sm:grow-0 keeps it inline on wide). New JS index-2wR7gTIu.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v283";
+// cache-bust: 20260613-0700 wc-v284: same iPhone overlap fix for the not-created Invoice row — flex-wrap row + Convert to Invoice button grow sm:grow-0 so "Not created yet" is no longer clipped on narrow viewports. New JS index-Cyddg8yo.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v284";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
