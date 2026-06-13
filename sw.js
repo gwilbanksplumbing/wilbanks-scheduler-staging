@@ -1,5 +1,5 @@
-// cache-bust: 20260613-1315 wc-v289: CARD = VIEW/RESEND ONLY (no invoice creation). The dashboard estimate card no longer mints invoices; creation happens only via Ready-to-Invoice. Once an invoice exists: HVAC shows View Invoice (read-only in-app preview) + Resend Invoice (in-app email); Plumbing shows View Invoice (real QB PDF) + Resend via QuickBooks (opens QB invoice page). Before an invoice exists, no create button. New JS index-CYu1gwRi.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v289";
+// cache-bust: 20260613-1330 wc-v290: SINGLE INVOICE DOOR. Removed every invoice create/send door outside Ready-to-Invoice. Card: no create (v289), View + Resend only once an invoice exists. Builder: removed Plumbing Convert-to-Invoice link, HVAC Send-Invoice link on Saved Estimates row, and the editor Preview Invoice / Send Invoice buttons. Builder is now estimate-only (Save/Update + Preview & Send estimate). Invoices minted ONLY via Ready-to-Invoice. New JS index-Cm6ju20R.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v290";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
