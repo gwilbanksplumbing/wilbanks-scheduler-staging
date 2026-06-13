@@ -1,5 +1,5 @@
-// cache-bust: 20260613-0955 wc-v287: card Convert-to-Invoice is now service-type aware. HVAC routes to the SAME Gmail send flow (HvacSendInvoiceFlow) as the Ready-to-Invoice tab — never the QB convert endpoint — so both doorways create ONE invoice (server reuses qb_invoice_num). HVAC button label: Send Invoice / Resend Invoice; subtext: Invoice sent / Not created yet. Plumbing unchanged (QB convert). New JS index-AaGUYNEB.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v287";
+// cache-bust: 20260613-1200 wc-v288: INVOICE-LOCK UI. Once an invoice exists (_hasInvoice), the dashboard estimate-card Edit pencil is hidden so line items/verbiage cannot be changed. View stays (read-only preview). Resend Invoice unchanged. Matches server lock (409 estimate_locked on PATCH /api/estimates/:id). New JS index-vhF2U5Da.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v288";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
