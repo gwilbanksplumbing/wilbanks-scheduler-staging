@@ -1,5 +1,5 @@
-// cache-bust: 20260612-2256 wc-v281: card Edit pencil now opens the builder with the estimate loaded straight into the editable line items (autoEdit); removed redundant Edit/trash/estimate-Preview from the Saved Estimates row. New JS index-BC4ldcwD.js, CSS index-Dwx5l_dI.css.
-const CACHE = "wc-v281";
+// cache-bust: 20260612-2308 wc-v282: stacked, numbered, time-stamped send history (1st/2nd/3rd sent ...) under the estimate on the card and the Saved Estimates row, fed by the new server send_history column. New JS index-3mrUTvaq.js, CSS index-FRfkkhm0.css.
+const CACHE = "wc-v282";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
