@@ -1,5 +1,5 @@
-// cache-bust: 20260612-2308 wc-v282: stacked, numbered, time-stamped send history (1st/2nd/3rd sent ...) under the estimate on the card and the Saved Estimates row, fed by the new server send_history column. New JS index-3mrUTvaq.js, CSS index-FRfkkhm0.css.
-const CACHE = "wc-v282";
+// cache-bust: 20260613-0700 wc-v283: fix empty-state Estimate row overlap on iPhone — added flex-wrap so the Create Estimate button wraps full-width below the label on narrow viewports (sm:grow-0 keeps it inline on wide). New JS index-2wR7gTIu.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v283";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
