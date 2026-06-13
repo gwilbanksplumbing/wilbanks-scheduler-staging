@@ -1,5 +1,5 @@
-// cache-bust: 20260613-1330 wc-v290: SINGLE INVOICE DOOR. Removed every invoice create/send door outside Ready-to-Invoice. Card: no create (v289), View + Resend only once an invoice exists. Builder: removed Plumbing Convert-to-Invoice link, HVAC Send-Invoice link on Saved Estimates row, and the editor Preview Invoice / Send Invoice buttons. Builder is now estimate-only (Save/Update + Preview & Send estimate). Invoices minted ONLY via Ready-to-Invoice. New JS index-Cm6ju20R.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v290";
+// cache-bust: 20260613-1755 wc-v291: SHOW-COMPLETED TOGGLE. Completed jobs are now hidden from the calendar by default to de-clutter it (still tracked in Reports). A "Completed" toggle in the calendar header (next to View) brings them back; the filter is applied at the calendarAppts source so it covers all views (month/week/day/tech). State persists via sessionStorage wc_cal_show_completed. New JS index-U8kvmhPB.js, CSS index-DVFzr4l9.css.
+const CACHE = "wc-v291";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
