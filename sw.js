@@ -1,5 +1,5 @@
-// cache-bust: 20260613-0702 wc-v285: preview modal footer (Back/Send) was pushed off-screen on iPhone — switched modal height from 92vh to 92dvh + maxHeight 100% and added safe-area top/bottom padding on the overlay so the footer always stays visible. New JS index-lxs0ZC7c.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v285";
+// cache-bust: 20260613-0706 wc-v286: REAL fix for preview footer off-screen on iPhone — portal the preview modal to document.body + z-[10000] (proven RtiActions pattern). The in-shell modal was being clipped by the App shell stacking context and the persistent AskAiBar painted over the footer. New JS index-CoyseCwE.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v286";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
