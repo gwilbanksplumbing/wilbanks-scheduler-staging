@@ -1,5 +1,5 @@
-// cache-bust: 20260612-1830 wc-v276: AppointmentDetail pill/date/tech now overlay the fresh calendar-list copy so the status pill can never lag behind the month-calendar chip. New JS index-BqBdUlwk.js.
-const CACHE = "wc-v276";
+// cache-bust: 20260612-2218 wc-v277: Estimate/Invoice card redesign (empty-state per approved mockup) replaces the old single Create/View button. Behavior unchanged - Create Estimate / View both open the existing EstimateBuilder. New JS index-CG0n0FUn.js.
+const CACHE = "wc-v277";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
