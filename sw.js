@@ -1,5 +1,5 @@
-// cache-bust: 20260613-1200 wc-v288: INVOICE-LOCK UI. Once an invoice exists (_hasInvoice), the dashboard estimate-card Edit pencil is hidden so line items/verbiage cannot be changed. View stays (read-only preview). Resend Invoice unchanged. Matches server lock (409 estimate_locked on PATCH /api/estimates/:id). New JS index-vhF2U5Da.js, CSS index-DtCwdFQF.css.
-const CACHE = "wc-v288";
+// cache-bust: 20260613-1315 wc-v289: CARD = VIEW/RESEND ONLY (no invoice creation). The dashboard estimate card no longer mints invoices; creation happens only via Ready-to-Invoice. Once an invoice exists: HVAC shows View Invoice (read-only in-app preview) + Resend Invoice (in-app email); Plumbing shows View Invoice (real QB PDF) + Resend via QuickBooks (opens QB invoice page). Before an invoice exists, no create button. New JS index-CYu1gwRi.js, CSS index-DtCwdFQF.css.
+const CACHE = "wc-v289";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
