@@ -1,5 +1,5 @@
-// cache-bust: 20260613-1834 wc-v293: MAP DUPLICATE FIX. /api/map/appointments now fetches customer_type via a correlated subquery instead of LEFT JOIN customers (customer_name has no unique constraint, so the join fanned out and listed the same appointment twice on the Map View). MapView.tsx also dedupes by appt id client-side (belt-and-suspenders). New JS index-gBU2kxXy.js, CSS index-DVFzr4l9.css.
-const CACHE = "wc-v293";
+// cache-bust: 20260613-1839 wc-v293a: MAP DATE-PICKER now CLOSES on day select. The Map View date Popover was uncontrolled, so picking a day updated the date but left the calendar open over the map (Glenn's report). Now controlled via datePickerOpen state; onSelect sets the date AND closes the popover. (Also still carries wc-v293: map duplicate fix via correlated subquery + client dedupe.) New JS index-BqB_B0d_.js, CSS index-DVFzr4l9.css.
+const CACHE = "wc-v293a";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
