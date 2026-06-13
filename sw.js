@@ -1,5 +1,5 @@
-// cache-bust: 20260613-1839 wc-v293a: MAP DATE-PICKER now CLOSES on day select. The Map View date Popover was uncontrolled, so picking a day updated the date but left the calendar open over the map (Glenn's report). Now controlled via datePickerOpen state; onSelect sets the date AND closes the popover. (Also still carries wc-v293: map duplicate fix via correlated subquery + client dedupe.) New JS index-BqB_B0d_.js, CSS index-DVFzr4l9.css.
-const CACHE = "wc-v293a";
+// cache-bust: 20260613-1846 wc-v293b: CALENDAR HOVER + selected-date styling. Days now visibly stand out on hover (accent-tinted fill + ring), and the SELECTED day uses the bold orange accent fill+ring while TODAY is a subtle outline ring only (was backwards/faint before). Shared shadcn calendar.tsx, so applies app-wide. New JS index-CoRKHDaa.js, CSS index-hvC_Rh4Z.css.
+const CACHE = "wc-v293b";
 // GitHub Pages serves this site under /wilbanks-scheduler-staging/ so plain
 // "/" and "/index.html" 404. We try to precache them best-effort but DO NOT
 // fail the install if they're unreachable. Without this, install rejection
