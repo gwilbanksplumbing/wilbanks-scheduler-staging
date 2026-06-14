@@ -1,24 +1,14 @@
 {
-  "name": "Wilbanks STAGING Scheduler",
-  "short_name": "WB STAGING",
-  "description": "HVAC & Plumbing Scheduling Dashboard",
-  "start_url": "https://gwilbanksplumbing.github.io/wilbanks-scheduler-staging/",
-  "scope": "https://gwilbanksplumbing.github.io/wilbanks-scheduler-staging/",
+  "name": "Wilbanks Field Tech",
+  "short_name": "WC Field Tech",
+  "description": "Wilbanks Company field technician app",
+  "start_url": "/#/field",
   "display": "standalone",
-  "background_color": "#09090b",
-  "theme_color": "#09090b",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "orientation": "portrait",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
