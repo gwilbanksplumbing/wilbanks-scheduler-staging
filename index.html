@@ -1,48 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- IMPORTANT: do NOT add `viewport-fit=cover`. In an installed standalone
-         PWA it changes how iOS applies the bottom safe-area inset, which pushes
-         the in-flow "Ask anything" bar UP and leaves a dead gap below it.
-         Production ships `maximum-scale=1` with no viewport-fit; we match it. -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-
-    <!-- PWA meta (for field tech install). Use RELATIVE (`./`) icon/manifest
-         paths so they resolve under the deploy subdirectory instead of the
-         domain root (absolute `/` paths 404 on GitHub Pages project sites and
-         make iOS fall back to a black "W" icon). -->
+    <link rel="icon" type="image/png" href="./icon-192.png" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Wilbanks Preview" />
+    <meta name="apple-mobile-web-app-title" content="Wilbanks" />
     <meta name="theme-color" content="#09090b" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
-    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-    <link rel="manifest" href="./manifest.json" />
-
-    <title>Wilbanks Company</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fira+Code:wght@300..700&family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- wc-v222: Pre-paint theme application from per-user cache.
-         wc-v224b: FULLY STRICT per-tab login — sessionStorage only, no
-         localStorage fallback. Each tab forces a fresh login.
-         See Wilbanks_SaaS_Auth_Session_Architecture_Plan.md Phase 1.
          Reads wc_prefs_cache_<userId> (written by PreferencesProvider after
          server hydration). Decodes user_id from the JWT payload — no
          signature verification needed; we're only using it as a cache key,
          not for auth. Default = dark. All paths fail closed to dark so a
-         missing/blocked storage layer never flashes light. -->
+         missing/blocked storage layer never flashes light.
+         wc-v224b: FULLY STRICT per-tab login — sessionStorage only, no
+         localStorage fallback. A fresh tab will have no token here, fall
+         through to default-dark, and the login screen will render. -->
     <script>
       (function () {
-        // Default: dark. Only flip to light if we have a confirmed light pref
-        // for THIS user.
         document.documentElement.classList.add('dark');
         try {
           var token = sessionStorage.getItem('wc_auth_token');
           if (!token) return;
           var parts = token.split('.');
           if (parts.length !== 3) return;
-          // base64url -> base64
           var b64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
           while (b64.length % 4) b64 += '=';
           var payload = JSON.parse(atob(b64));
@@ -54,26 +48,85 @@
           if (cache && cache.wc_theme === 'light') {
             document.documentElement.classList.remove('dark');
           }
-        } catch (e) {
-          // Storage blocked / parse error — stay on dark default.
-        }
+        } catch (e) { /* storage blocked — stay on dark */ }
       })();
     </script>
-    <!-- Auth layer must run BEFORE React mounts so window.fetch is patched to inject JWT.
-         Lives at /auth-layer.js next to index.html. Required for all authenticated
-         direct fetch() calls in patched.tsx and pages/*.tsx that don't pass an Authorization header. -->
-    <script src="./auth-layer.js?v=wc-v295f"></script>
-    <script type="module" crossorigin src="./assets/index-NOLknloh.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-hvC_Rh4Z.css">
+
+    <!--
+      ─────────────────────────────────────────────────────────────────────
+      Fresh-deploy auto-update (PROD) — wc-v224e
+      ─────────────────────────────────────────────────────────────────────
+      THE PROBLEM (esp. installed iOS PWAs): GitHub Pages serves index.html
+      with `cache-control: max-age=600`, and the service worker also caches
+      index.html + the hashed bundle. On iOS the installed PWA can keep serving
+      an OLD index.html (pointing at the OLD JS hash) across launches, so new
+      deploys never appear without a hard refresh or a delete/reinstall.
+
+      THE FIX: on every load, re-fetch index.html straight from the network
+      (no-store) and compare the live JS bundle hash against the one THIS page
+      loaded with. The JS hash changes on EVERY deploy, so this is a reliable
+      freshness signal.
+
+      When a newer hash is live we proactively (a) tell the active service
+      worker to drop its caches and (b) hard-reload once (guarded by
+      sessionStorage to prevent any loop). This updates installed iOS PWAs in
+      place — no delete/reinstall required.
+    -->
+    <script>
+      (function () {
+        // JS bundle hash this page actually loaded with (kept in sync at deploy).
+        var LOADED_JS = "index-ClK6eIvb.js";
+        function clearSwCachesAndReload() {
+          var done = false;
+          function go() {
+            if (done) return; done = true;
+            location.reload();
+          }
+          try {
+            if ('caches' in window) {
+              caches.keys().then(function (keys) {
+                return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+              }).then(go, go);
+              // Safety: never hang on a stuck caches API.
+              setTimeout(go, 1500);
+            } else { go(); }
+          } catch (e) { go(); }
+        }
+        try {
+          var GUARD = "wc_autoreload_" + LOADED_JS;
+          if (sessionStorage.getItem(GUARD)) return; // already updated this session
+        } catch (e) { return; /* sessionStorage unavailable — fail open */ }
+        fetch(location.pathname, { cache: "no-store" })
+          .then(function (r) { return r.ok ? r.text() : null; })
+          .then(function (html) {
+            if (!html) return;
+            var m = html.match(/assets\/(index-[A-Za-z0-9_-]+\.js)/);
+            if (!m) return;
+            var liveJs = m[1];
+            if (liveJs && liveJs !== LOADED_JS) {
+              try { sessionStorage.setItem("wc_autoreload_" + LOADED_JS, "1"); } catch (e) {}
+              clearSwCachesAndReload();
+            }
+          })
+          .catch(function () { /* network hiccup — ignore, page still works */ });
+      })();
+    </script>
+
+    <script src="./auth-layer.js?v=wc-prod-v4"></script>
+    <script type="module" crossorigin src="./assets/index-ClK6eIvb.js?v=wc-prod-v4"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-hvC_Rh4Z.css?v=wc-prod-v4">
+    <style>
+  /* wc-v254a: PWA full-screen base only. The legacy `main { left: 256px !important;
+     padding-top: 0 !important }` override was removed — it fought v251's brand-band
+     layout (App.tsx <main> sets pt-[var(--wc-band-h,72px)]) and hid the Manage
+     Schedule header card under the band. Sidebar + main positioning is now fully
+     owned by the React app (Tailwind utilities), matching staging. */
+  html, body { background: #09090b; margin: 0; padding: 0; height: 100%; touch-action: none; }
+  body { position: fixed; width: 100%; height: 100%; overflow: hidden; touch-action: none; }
+  #root { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #09090b; touch-action: none; }
+</style>
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch(() => {});
-        });
-      }
-    </script>
   </body>
 </html>
