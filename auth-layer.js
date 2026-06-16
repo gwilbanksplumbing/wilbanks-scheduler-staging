@@ -26,6 +26,17 @@
            window.location.href.includes('wilbanks-fieldtech');
   }
 
+  // wc-v295f: ACCESS-GATE detection only (does NOT change login UI or token
+  // storage). The field tech app is a hash route (#/field) per the React router
+  // (App.tsx: location.startsWith('/field')). The role gates below must treat
+  // that hash as the field app so a 'tech' isn't wrongly blocked / logged out.
+  function isFieldRoute() {
+    var h = window.location.hash || '';
+    return h === '#/field' || h.indexOf('#/field/') === 0 || h.indexOf('#/field') === 0 ||
+           window.location.pathname.includes('fieldtech') ||
+           window.location.href.includes('wilbanks-fieldtech');
+  }
+
   function saveToken(token) {
     _token = token;
     try {
@@ -662,9 +673,8 @@
     window.__WC_USER = user;
     publishUserRole(user);
 
-    // Determine which app we're on
-    const isDashboard = !window.location.pathname.includes('fieldtech') &&
-                        !window.location.href.includes('wilbanks-fieldtech');
+    // Determine which app we're on (wc-v295f: hash-aware)
+    const isDashboard = !isFieldRoute();
     // 'tech' can only access field tech app
     if (user.role === 'tech' && isDashboard) {
       clearToken();
@@ -826,8 +836,7 @@
   let _inactivityInterval = null;
 
   function getInactivityLimit() {
-    const isDashboard = !window.location.pathname.includes('fieldtech') &&
-                        !window.location.href.includes('wilbanks-fieldtech');
+    const isDashboard = !isFieldRoute(); // wc-v295f: hash-aware
     return isDashboard ? 30 * 60 * 1000 : 24 * 60 * 60 * 1000; // 30min or 24hr in ms
   }
 
@@ -865,9 +874,7 @@
 
   function syncFieldTechName(user) {
     if (!user) return;
-    const isDashboard = !window.location.pathname.includes('fieldtech') &&
-                        !window.location.href.includes('wilbanks-fieldtech') &&
-                        !window.location.href.includes('fieldtech');
+    const isDashboard = !isFieldRoute(); // wc-v295f: hash-aware
     if (isDashboard) return; // only needed on field tech app
     try {
       const name = user.displayName || user.username || '';
@@ -1876,8 +1883,7 @@
           }, 1500);
           // Block field techs from accessing the dashboard URL
           if (user.role === 'tech') {
-            const isDashboard = !window.location.pathname.includes('fieldtech') &&
-                                !window.location.href.includes('wilbanks-fieldtech');
+            const isDashboard = !isFieldRoute(); // wc-v295f: hash-aware
             if (isDashboard) {
               if (root) root.style.display = 'none';
               renderLogin('Field Tech accounts cannot access the dashboard.');
@@ -1887,8 +1893,7 @@
           }
           // Block dispatcher-only role from field tech app (admin can access both)
           if (user.role === 'dispatcher') {
-            const isDashboard = !window.location.pathname.includes('fieldtech') &&
-                                !window.location.href.includes('wilbanks-fieldtech');
+            const isDashboard = !isFieldRoute(); // wc-v295f: hash-aware
             if (!isDashboard) {
               if (root) root.style.display = 'none';
               renderLogin('Dashboard accounts cannot access the Field Tech app.');
