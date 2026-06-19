@@ -1,5 +1,5 @@
-// cache-bust: 20260619-171700 wc-v298-custtype staging: New Contact form now has a required Residential/Commercial type picker. Commercial = company name is primary identity (required, top) + contact/bill-to person below (required); residential = person name is identity source. Sends explicit customer_type so the server scopes the duplicate check by type (a commercial bill-to can also exist as their own residential customer). Plus prior wc-v297 commercial-first card ordering. bundle index-CZXHMJLP.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
-const CACHE = "wc-v298-custtype";
+// cache-bust: 20260619-174400 wc-v299-addnew staging: New Job customer search now always shows a "+ Add a new customer" row at the bottom of the results list (not only on zero matches), so a person who is a commercial bill-to (e.g. Tommy Pratt under Gardner Landscaping) can still be added as their own customer. Opens the Residential/Commercial type popup and pre-fills the typed text (person name for residential, company name for commercial). Plus prior wc-v298 New Contact type picker + wc-v297 commercial-first card ordering. bundle index-UKGB5QQ0.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
+const CACHE = "wc-v299-addnew";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
