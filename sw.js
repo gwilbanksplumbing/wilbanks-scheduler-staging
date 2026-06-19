@@ -1,5 +1,5 @@
-// cache-bust: 20260616-031646 wc-v296-qbnotes staging: QB invoice notes->CustomerMemo + ready-gated tab open. bundle index-CjgSd2LL.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
-const CACHE = "wc-v296-qbnotes";
+// cache-bust: 20260619-170200 wc-v297-commercial staging: AppointmentCard commercial-first name ordering (companyName primary, contact secondary). bundle index-D_QQJbKc.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
+const CACHE = "wc-v297-commercial";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
