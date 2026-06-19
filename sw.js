@@ -1,5 +1,5 @@
-// cache-bust: 20260619-181500 wc-v300-invoicefix staging: Convert to Invoice no longer dead-ends when an invoice already exists. If a prior attempt created the QB invoice but the QB tab was popup-blocked, retrying now opens the EXISTING invoice (via /api/qb-invoice-detail) instead of showing a dead-end "invoice_already_exists" error — no duplicate is ever created. The normal success path also attaches a clickable "Open in QuickBooks" toast action so a blocked auto-popup is never a dead end. bundle index-DUZIRd95.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
-const CACHE = "wc-v300-invoicefix";
+// cache-bust: 20260619-182400 wc-v301-invrelink staging: Convert to Invoice now self-heals when the QB invoice already exists. On invoice_already_exists, the app calls POST /api/qb-invoice-relink to resolve the existing QB invoice by its number, stamp the full QB linkage + status back onto the appointment (so the job leaves "Ready to Invoice"), and opens that exact invoice via a working "Open Invoice" toast link. No duplicate is ever created; the stuck job moves out of the list. Plus prior v300 popup-safe success toast. bundle index-Br4IR-yq.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
+const CACHE = "wc-v301-invrelink";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
