@@ -1,5 +1,5 @@
-// cache-bust: 20260619-174400 wc-v299-addnew staging: New Job customer search now always shows a "+ Add a new customer" row at the bottom of the results list (not only on zero matches), so a person who is a commercial bill-to (e.g. Tommy Pratt under Gardner Landscaping) can still be added as their own customer. Opens the Residential/Commercial type popup and pre-fills the typed text (person name for residential, company name for commercial). Plus prior wc-v298 New Contact type picker + wc-v297 commercial-first card ordering. bundle index-UKGB5QQ0.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
-const CACHE = "wc-v299-addnew";
+// cache-bust: 20260619-181500 wc-v300-invoicefix staging: Convert to Invoice no longer dead-ends when an invoice already exists. If a prior attempt created the QB invoice but the QB tab was popup-blocked, retrying now opens the EXISTING invoice (via /api/qb-invoice-detail) instead of showing a dead-end "invoice_already_exists" error — no duplicate is ever created. The normal success path also attaches a clickable "Open in QuickBooks" toast action so a blocked auto-popup is never a dead end. bundle index-DUZIRd95.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
+const CACHE = "wc-v300-invoicefix";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
