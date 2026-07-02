@@ -1,5 +1,5 @@
-// cache-bust: 20260702-170000 wc-v303-pastdue-btns staging: Invoice-row buttons unified to variant=outline (transparent bg, white text, subtle border) with hover:bg-blue-600 hover:text-white hover:border-blue-600. Removes solid green Resend Invoice and amber Send Past Due Notice — all three invoice-row buttons (View Invoice, Resend Invoice, Send Past Due Notice; Plumbing gets View Invoice, Resend via QuickBooks, Send Past Due Notice) now share the neutral outline style with blue hover. Icons kept. Prior v302: Print button in preview modals + past-due preview+send flow + QB TxnDate rendering. bundle index-Dpastdue02.js / index-WxGDSTn6.css. auth-layer.js untouched.
-const CACHE = "wc-v303-pastdue-btns";
+// cache-bust: 20260702-172100 wc-v304-pastdue-drawer staging: Outstanding drawer gets Send Past Due Invoice button next to Record Payment. Both pills restyled: transparent bg + subtle border + white text → solid blue on hover. past_due_sent_at persisted server-side (SQLite column + /api/outstanding-invoices returns it + /send-gmail stamps NOW() on pastDue). Row shows Past due sent: MMM D, h:mm A when timestamp exists. bundle index-Dpastdue03.js / index-WxGDSTn6.css.
+const CACHE = "wc-v304-pastdue-drawer";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
