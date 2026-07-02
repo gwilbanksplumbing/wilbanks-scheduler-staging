@@ -1,5 +1,5 @@
-// cache-bust: 20260619-182400 wc-v301-invrelink staging: Convert to Invoice now self-heals when the QB invoice already exists. On invoice_already_exists, the app calls POST /api/qb-invoice-relink to resolve the existing QB invoice by its number, stamp the full QB linkage + status back onto the appointment (so the job leaves "Ready to Invoice"), and opens that exact invoice via a working "Open Invoice" toast link. No duplicate is ever created; the stuck job moves out of the list. Plus prior v300 popup-safe success toast. bundle index-Br4IR-yq.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
-const CACHE = "wc-v301-invrelink";
+// cache-bust: 20260702-161500 wc-v302-pastdue staging: Invoice/Estimate preview modals now include Print button (iframe.contentWindow.print()). Invoice card gains "Send Past Due Notice" button (both HVAC and Plumbing branches) when invoice exists and isn't paid. Past-due opens the same HvacSendInvoiceFlow preview+send with pastDue=true — server renders amber Payment Reminder banner in preview HTML, uses PAST DUE subject line and QB TxnDate for original invoice date. Fix: qb-invoice-paid Gmail HTML now uses TxnDate (was Date.now()). bundle index-Dpastdue01.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
+const CACHE = "wc-v302-pastdue";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
