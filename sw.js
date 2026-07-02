@@ -1,5 +1,5 @@
-// cache-bust: 20260702-161500 wc-v302-pastdue-b staging: Invoice/Estimate preview modals now include Print button (iframe.contentWindow.print()). Invoice card gains "Send Past Due Notice" button (both HVAC and Plumbing branches) when invoice exists and isn't paid. Past-due opens the same HvacSendInvoiceFlow preview+send with pastDue=true — server renders amber Payment Reminder banner in preview HTML, uses PAST DUE subject line and QB TxnDate for original invoice date. Fix: qb-invoice-paid Gmail HTML now uses TxnDate (was Date.now()). bundle index-Dpastdue01.js / index-hvC_Rh4Z.css. auth-layer.js untouched.
-const CACHE = "wc-v302-pastdue-b";
+// cache-bust: 20260702-170000 wc-v303-pastdue-btns staging: Invoice-row buttons unified to variant=outline (transparent bg, white text, subtle border) with hover:bg-blue-600 hover:text-white hover:border-blue-600. Removes solid green Resend Invoice and amber Send Past Due Notice — all three invoice-row buttons (View Invoice, Resend Invoice, Send Past Due Notice; Plumbing gets View Invoice, Resend via QuickBooks, Send Past Due Notice) now share the neutral outline style with blue hover. Icons kept. Prior v302: Print button in preview modals + past-due preview+send flow + QB TxnDate rendering. bundle index-Dpastdue02.js / index-WxGDSTn6.css. auth-layer.js untouched.
+const CACHE = "wc-v303-pastdue-btns";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
