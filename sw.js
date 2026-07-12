@@ -1,5 +1,5 @@
-// cache-bust: 20260712-222749 wc-staging-bookhours-20260712-222749 staging: Bookable-hours enforcement — calendar grid + New Job time picker obey Settings business_hours_start/end; out-of-window start slots hidden/disabled. Server guard already live. bundle index-DhWGYFdY.js.
-const CACHE = "wc-staging-bookhours-20260712-222749";
+// cache-bust: 20260712-223431 wc-staging-bookhours2-20260712-223431 staging: Bookable-hours enforcement extended to By Tech swim-lane (grid range + drag/click-to-create obey Settings window). bundle index-C5BKEUm8.js.
+const CACHE = "wc-staging-bookhours2-20260712-223431";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
