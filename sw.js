@@ -1,5 +1,5 @@
-// cache-bust: 20260702-173500 wc-v305-thresh-all staging: Settings Billing dropdown adds "All" option (value=1) so outstanding tile shows every sent-but-unpaid invoice regardless of age. Server whitelist ALLOWED_THRESHOLDS=[1,15,30,45,60,90,120] on GET+PUT. Outstanding pill and drawer header render "All" instead of "1d+" when threshold=1. bundle index-Dpastdue04.js.
-const CACHE = "wc-staging-fieldwhite-20260712-193337";
+// cache-bust: 20260712-222749 wc-staging-bookhours-20260712-222749 staging: Bookable-hours enforcement — calendar grid + New Job time picker obey Settings business_hours_start/end; out-of-window start slots hidden/disabled. Server guard already live. bundle index-DhWGYFdY.js.
+const CACHE = "wc-staging-bookhours-20260712-222749";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
