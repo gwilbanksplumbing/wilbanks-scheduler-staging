@@ -1,5 +1,5 @@
-// cache-bust: 20260712-223431 wc-staging-bookhours2-20260712-223431 staging: Bookable-hours enforcement extended to By Tech swim-lane (grid range + drag/click-to-create obey Settings window). bundle index-C5BKEUm8.js.
-const CACHE = "wc-staging-bookhours2-20260712-223431";
+// cache-bust: 20260714-141500 wc-staging-sendtoast-20260714-141500 staging: send toast now shows resolved recipient (sentTo). bundle index-BdmJF5_P.js.
+const CACHE = "wc-staging-sendtoast-20260714-141500";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
