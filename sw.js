@@ -1,5 +1,5 @@
-// cache-bust: 20260714-141500 wc-staging-sendtoast-20260714-141500 staging: send toast now shows resolved recipient (sentTo). bundle index-BdmJF5_P.js.
-const CACHE = "wc-staging-sendtoast-20260714-141500";
+// cache-bust: 20260714-150800 wc-staging-descformat-20260714-150800 staging: line-item description formatting preserved (white-space:pre-wrap) on estimate/invoice. bundle index-D7MK95F8.js.
+const CACHE = "wc-staging-descformat-20260714-150800";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
