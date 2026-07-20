@@ -1,5 +1,5 @@
-// cache-bust: 20260714-150800 wc-staging-descformat-20260714-150800 staging: line-item description formatting preserved (white-space:pre-wrap) on estimate/invoice. bundle index-D7MK95F8.js.
-const CACHE = "wc-staging-descformat-20260714-150800";
+// cache-bust: wc-staging-multiline-invoice-20260720-215458 staging: QB invoice multi-line items + redirect to invoices list. bundle index-C4Y7eYe2.js.
+const CACHE = "wc-staging-multiline-invoice-20260720-215458";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
