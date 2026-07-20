@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-multiline-invoice-20260720-215458 staging: QB invoice multi-line items + redirect to invoices list. bundle index-C4Y7eYe2.js.
-const CACHE = "wc-staging-multiline-invoice-20260720-215458";
+// cache-bust: wc-staging-paid-multiline-20260720-232744 staging: paid-in-full QB invoice now mirrors preview (collapse vs itemize). bundle index-NOyLMXQa.js.
+const CACHE = "wc-staging-paid-multiline-20260720-232744";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
