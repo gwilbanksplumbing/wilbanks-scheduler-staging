@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-spanoverride-edit-20260727-190500 staging: EDIT screen now sends spanOverride too, so editing an appt to 8:00 AM-12:00 PM saves the full span instead of re-clamping to 2h. bundle index-CupxxRJi.js.
-const CACHE = "wc-staging-spanoverride-edit-20260727-190500";
+// cache-bust: wc-staging-banner-20260727-191500 staging: added yellow 'STAGING — Test Data Only' banner at top of index.html (matches Field app). #root pushed down 20px. No bundle change.
+const CACHE = "wc-staging-banner-20260727-191500";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));

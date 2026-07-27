@@ -112,9 +112,9 @@
       })();
     </script>
 
-    <script src="./auth-layer.js?v=wc-staging-spanoverride-edit-20260727-190500"></script>
-    <script type="module" crossorigin src="./assets/index-CupxxRJi.js?v=wc-staging-spanoverride-edit-20260727-190500"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BJBnrrQT.css?v=wc-staging-spanoverride-edit-20260727-190500">
+    <script src="./auth-layer.js?v=wc-staging-banner-20260727-191500"></script>
+    <script type="module" crossorigin src="./assets/index-CupxxRJi.js?v=wc-staging-banner-20260727-191500"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BJBnrrQT.css?v=wc-staging-banner-20260727-191500">
     <style>
   /* wc-v254a: PWA full-screen base only. The legacy `main { left: 256px !important;
      padding-top: 0 !important }` override was removed — it fought v251's brand-band
@@ -123,10 +123,13 @@
      owned by the React app (Tailwind utilities), matching staging. */
   html, body { background: #09090b; margin: 0; padding: 0; height: 100%; touch-action: none; }
   body { position: fixed; width: 100%; height: 100%; overflow: hidden; touch-action: none; }
-  #root { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #09090b; touch-action: none; }
+  #root { position: fixed; top: 20px; left: 0; right: 0; bottom: 0; background: #09090b; touch-action: none; }
+  /* Staging-only banner: pin to the very top, push #root down 20px so nothing is hidden. */
+  #staging-banner { position: fixed; top: 0; left: 0; right: 0; height: 20px; z-index: 2147483647; box-sizing: border-box; background: rgba(251,191,36,0.15); border-bottom: 1px solid rgba(251,191,36,0.4); color: #fbbf24; font-family: system-ui, sans-serif; font-weight: 600; font-size: 11px; line-height: 14px; padding: 3px 10px; text-align: center; letter-spacing: .5px; }
 </style>
   </head>
   <body>
+    <div id="staging-banner">⚠️ STAGING — Test Data Only</div>
     <div id="root"></div>
   </body>
 </html>
