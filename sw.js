@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-dupmsg-20260727-181200 staging: duplicate-customer create now shows a clean human message (no raw Server 409 JSON). bundle index-BQ-ZRcR4.js.
-const CACHE = "wc-staging-dupmsg-20260727-181200";
+// cache-bust: wc-staging-spanoverride-20260727-184800 staging: Multi-Day/Multi-Hour toggle now honors same-day custom durations (sends spanOverride). bundle index-Co2A3hi8.js.
+const CACHE = "wc-staging-spanoverride-20260727-184800";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
