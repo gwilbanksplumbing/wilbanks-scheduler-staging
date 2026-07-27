@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-import-template-20260727-202500 staging: split import into Template + Import File buttons, added upload-screen hint line.
-const CACHE = "wc-staging-import-template-20260727-202500";
+// cache-bust: wc-staging-import-real-20260727-203400 staging: bulk import wizard NOW IN THE ROUTED PAGE (pages/Customers.tsx) — prior builds edited dead patched.tsx. Template + Import File buttons, hint, two-phase preview/apply wizard.
+const CACHE = "wc-staging-import-real-20260727-203400";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
