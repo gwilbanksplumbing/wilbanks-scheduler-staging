@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-import-btns-20260727-210200 staging: dup bulk actions are real buttons (Skip all / Merge all); per-row buttons clearer.
-const CACHE = "wc-staging-import-btns-20260727-210200";
+// cache-bust: wc-staging-import-links-20260727-210800 staging: dup bulk actions = blue underlined text links (skip / merge) with descriptions.
+const CACHE = "wc-staging-import-links-20260727-210800";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
