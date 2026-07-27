@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-paid-multiline-20260720-232744 staging: paid-in-full QB invoice now mirrors preview (collapse vs itemize). bundle index-NOyLMXQa.js.
-const CACHE = "wc-staging-paid-multiline-20260720-232744";
+// cache-bust: wc-staging-dupwarn-20260727-174800 staging: booking-screen duplicate-customer warning (fuzzy match on typed name; Use existing / Create new / Cancel). bundle index-08jGGtzB.js.
+const CACHE = "wc-staging-dupwarn-20260727-174800";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
