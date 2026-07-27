@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-import-clean-20260727-204500 staging: import wizard redesign — clean rows auto-add (collapsed), only duplicates/in-file-dups/invalid need review.
-const CACHE = "wc-staging-import-clean-20260727-204500";
+// cache-bust: wc-staging-import-dupctrl-20260727-205600 staging: dup bulk controls = Skip/Merge only (no bulk overwrite); plain-language labels + tooltips.
+const CACHE = "wc-staging-import-dupctrl-20260727-205600";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
