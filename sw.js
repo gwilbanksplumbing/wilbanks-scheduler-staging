@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-dupwarn-20260727-174800 staging: booking-screen duplicate-customer warning (fuzzy match on typed name; Use existing / Create new / Cancel). bundle index-08jGGtzB.js.
-const CACHE = "wc-staging-dupwarn-20260727-174800";
+// cache-bust: wc-staging-dupwarn2-20260727-180500 staging: dup-warning now fires on the "+ New customer" path too (custId "new" was skipping the check). bundle index-bo8TpVtY.js.
+const CACHE = "wc-staging-dupwarn2-20260727-180500";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
