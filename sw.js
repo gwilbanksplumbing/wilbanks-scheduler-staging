@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-import-links-20260727-210800 staging: dup bulk actions = blue underlined text links (skip / merge) with descriptions.
-const CACHE = "wc-staging-import-links-20260727-210800";
+// cache-bust: wc-staging-newcontact-hover-20260727-211600 staging: New Contact button neutral by default, blue on hover only.
+const CACHE = "wc-staging-newcontact-hover-20260727-211600";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
