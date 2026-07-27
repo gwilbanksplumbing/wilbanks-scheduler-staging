@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-import-real-20260727-203400 staging: bulk import wizard NOW IN THE ROUTED PAGE (pages/Customers.tsx) — prior builds edited dead patched.tsx. Template + Import File buttons, hint, two-phase preview/apply wizard.
-const CACHE = "wc-staging-import-real-20260727-203400";
+// cache-bust: wc-staging-import-clean-20260727-204500 staging: import wizard redesign — clean rows auto-add (collapsed), only duplicates/in-file-dups/invalid need review.
+const CACHE = "wc-staging-import-clean-20260727-204500";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
