@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-bulkimport-20260727-201200 staging: collision-safe bulk import wizard (preview/apply, per-row skip/merge/overwrite/create, CSV template, unmapped-col notice).
-const CACHE = "wc-staging-bulkimport-20260727-201200";
+// cache-bust: wc-staging-import-template-20260727-202500 staging: split import into Template + Import File buttons, added upload-screen hint line.
+const CACHE = "wc-staging-import-template-20260727-202500";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
