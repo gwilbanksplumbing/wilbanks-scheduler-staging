@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-dupwarn2-20260727-180500 staging: dup-warning now fires on the "+ New customer" path too (custId "new" was skipping the check). bundle index-bo8TpVtY.js.
-const CACHE = "wc-staging-dupwarn2-20260727-180500";
+// cache-bust: wc-staging-dupmsg-20260727-181200 staging: duplicate-customer create now shows a clean human message (no raw Server 409 JSON). bundle index-BQ-ZRcR4.js.
+const CACHE = "wc-staging-dupmsg-20260727-181200";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
