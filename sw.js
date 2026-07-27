@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-spanoverride-20260727-184800 staging: Multi-Day/Multi-Hour toggle now honors same-day custom durations (sends spanOverride). bundle index-Co2A3hi8.js.
-const CACHE = "wc-staging-spanoverride-20260727-184800";
+// cache-bust: wc-staging-spanoverride-edit-20260727-190500 staging: EDIT screen now sends spanOverride too, so editing an appt to 8:00 AM-12:00 PM saves the full span instead of re-clamping to 2h. bundle index-CupxxRJi.js.
+const CACHE = "wc-staging-spanoverride-edit-20260727-190500";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
