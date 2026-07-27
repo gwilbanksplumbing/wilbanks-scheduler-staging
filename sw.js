@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-banner-20260727-191500 staging: added yellow 'STAGING — Test Data Only' banner at top of index.html (matches Field app). #root pushed down 20px. No bundle change.
-const CACHE = "wc-staging-banner-20260727-191500";
+// cache-bust: wc-staging-bulkimport-20260727-201200 staging: collision-safe bulk import wizard (preview/apply, per-row skip/merge/overwrite/create, CSV template, unmapped-col notice).
+const CACHE = "wc-staging-bulkimport-20260727-201200";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
