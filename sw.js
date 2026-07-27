@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-import-dupctrl-20260727-205600 staging: dup bulk controls = Skip/Merge only (no bulk overwrite); plain-language labels + tooltips.
-const CACHE = "wc-staging-import-dupctrl-20260727-205600";
+// cache-bust: wc-staging-import-btns-20260727-210200 staging: dup bulk actions are real buttons (Skip all / Merge all); per-row buttons clearer.
+const CACHE = "wc-staging-import-btns-20260727-210200";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
