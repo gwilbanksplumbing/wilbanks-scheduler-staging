@@ -1,5 +1,5 @@
-// cache-bust: wc-staging-qb-blanktab-20260729-153500 staging: QB invoice links reuse one warm QuickBooks window (cold tab rendered blank); Resend button no longer appends &_t= which QBO treats as a blank new-invoice form.
-const CACHE = "wc-staging-qb-blanktab-20260729-153500";
+// cache-bust 20260729-205116 — QB link cleanup
+const CACHE = "wc-staging-qb-cleanup-20260729-205116";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
