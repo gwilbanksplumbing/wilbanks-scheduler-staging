@@ -1,5 +1,5 @@
 // cache-bust: wc-staging-actionbtn-hover-20260727-211900 staging: all 4 Customers action buttons neutral, fill primary-blue on hover.
-const CACHE = "wc-staging-actionbtn-hover-20260727-211900";
+const CACHE = "wc-staging-qb-invoice-link-20260729-133000";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
