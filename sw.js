@@ -1,5 +1,5 @@
-// cache-bust 20260730-131917 — chip badge now reports AGE on calendar, not slip
-const CACHE = "wc-staging-age-20260730-131917";
+// cache-bust 20260730-132434 — age fix: UTC-to-Central on createdAt
+const CACHE = "wc-staging-agefix-20260730-132434";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
