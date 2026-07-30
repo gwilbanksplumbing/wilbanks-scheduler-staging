@@ -1,5 +1,5 @@
-// cache-bust 20260729-205116 — QB link cleanup
-const CACHE = "wc-staging-qb-cleanup-20260729-205116";
+// cache-bust 20260730-023644 — Book Date age on calendar chips
+const CACHE = "wc-staging-bookdate-20260730-023625";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
