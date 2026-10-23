@@ -1,5 +1,5 @@
 // cache-bust 20260730-132434 — age fix: UTC-to-Central on createdAt
-const CACHE = "wc-staging-invedit-20261023-1792769844";
+const CACHE = "wc-staging-invedit2-20261023-1792770721";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
