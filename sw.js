@@ -1,5 +1,5 @@
 // cache-bust 20260730-132434 — age fix: UTC-to-Central on createdAt
-const CACHE = "wc-staging-invdates-20261024-1792891085";
+const CACHE = "wc-staging-qbpay-20261110-1794320286";
 const OFFLINE = ["/", "/index.html"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(OFFLINE)));
